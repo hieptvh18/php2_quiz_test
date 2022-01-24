@@ -19,7 +19,7 @@ class HomeController extends Controller
         ->select('subjects.*',DB::raw('count(quizs.id) as countQuiz'))
         ->groupBy('subjects.name','subjects.avatar','subjects.author_id')
         ->get();
-
+        // dd(cookie('loginEmail'));
         return view('frontend.homepage.home',['listCourse'=>$listCourse]);
     }
 }

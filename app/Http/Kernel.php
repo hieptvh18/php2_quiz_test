@@ -67,6 +67,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         // mdw tự tạo
-        // 'AuthLogin'=>AuthLogin::class,
+        'AuthLogin'=>AuthLogin::class,
     ];
 }

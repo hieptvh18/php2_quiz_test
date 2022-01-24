@@ -12,40 +12,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css
 ">
     <!-- css -->
-    <link rel="stylesheet" href="{{asset('css/login.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <title>login</title>
 </head>
 
 <body>
     <div class="wrapper fadeInDown">
         <div class="menu">
-            <a href="{{route('client.home')}}" class="mb-4">Về trang chủ</a>
+            @if(Session::get('student') || Session::get('teacher'))
+            <a href="{{ route('client.home') }}" class="mb-4">Về trang chủ</a>
+        @endif
         </div>
         <div id="formContent">
             <!-- Tabs Titles -->
 
             <!-- Icon -->
             <div class="fadeIn first">
-                <img src="{{asset('images/logo.png')}}" alt="User Icon"  width="80px"/>
+                <img src="{{ asset('images/logo.png') }}" alt="User Icon" width="80px" />
             </div>
 
             <!-- Login Form -->
             <h4 class="text-center ">Đăng nhập quiz test Poly</h4>
             @if (session('message'))
-                <div class="alert alert-success">{{session('message')}}</div>
+                <div class="alert alert-success">{{ session('message') }}</div>
             @endif
             @if (session('fail'))
-            <div class="alert alert-danger">{{session('fail')}}</div>
-        @endif
-           
+                <div class="alert alert-danger">{{ session('fail') }}</div>
+            @endif
+
             <form action="" method="POST">
                 @csrf
-                <input type="text" id="name" class="fadeIn second" value="{{old('email')}}" name="email" placeholder="email" >
-                @error('name')
+                <input type="text" id="name" class="fadeIn second" value="{{ old('email') }}" name="email" placeholder="email">
+                @error('email')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <input type="password" id="password" value="" class="fadeIn third" name="password" placeholder="password">
-                @error('name')
+                <input type="password" id="password" value="" class="fadeIn third" name="password"
+                    placeholder="password">
+                @error('password')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <div class="remember">
@@ -58,7 +61,7 @@
             <!-- Remind Passowrd -->
             <div id="formFooter">
                 <a class="underlineHover" href="#">Forgot Password?</a>
-                <a class="underlineHover" href="{{route('register')}}">Đăng kí tài khoản</a>
+                <a class="underlineHover" href="{{ route('register') }}">Đăng kí tài khoản</a>
             </div>
 
             <div class="login-gg">

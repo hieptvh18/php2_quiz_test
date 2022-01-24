@@ -4,9 +4,11 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cookie;
 use App\Models\User;
 
 class AccountController extends Controller
@@ -18,27 +20,41 @@ class AccountController extends Controller
             $email = $rq->input('email');
             $password = $rq->input('password');
 
+            $rq->validate([
+                'email' => 'required',
+                'password' => 'required'
+            ]);
             $userInfo = User::where('email', '=', $email)->first();
 
+            // email fail
             if (!$userInfo) {
                 return back()->with('fail', 'Tài khoản không tồn tại! Vui lòng thử lại!');
             }
             // chceck pass
 
             if (Hash::check($password, $userInfo->password)) {
-                // check role_id = 2 là client 1 = admin->dashboard
-                if($userInfo->role_id == 2){
-                    // lưu session
-                    $rq->session()->put('student',$userInfo);
-                    return redirect()->route('client.home');
-                }else{
-                    $rq->session()->put('teacher',$userInfo);
-                    return redirect()->route('admin.dashboard');
+
+                // check remember save cookie
+                if ($rq->input('remember')) {
+
+                } else {
+                 
                 }
 
+                // check role_id = 2 là client 1 = admin->dashboard
+                if ($userInfo->role_id == 2) {
+                    // lưu session
+                    $rq->session()->put('student', $userInfo);
+                    return redirect()->route('client.home');
+                } else {
+                    $rq->session()->put('teacher', $userInfo);
+                    return redirect()->route('admin.dashboard');
+                }
             } else {
-                return back()->with('fail','Mật khẩu không chính xác!');
+                return back()->with('fail', 'Mật khẩu không chính xác!');
             }
+
+            return back()->with('fail', 'Fail');
         }
 
         return view('layout.login');
@@ -57,12 +73,7 @@ class AccountController extends Controller
                 'password' => 'required|min:5',
                 'avatar' => 'required'
             ]);
-            // // check email exist
-            // if (DB::table('users')->where('email', $rq->email)->exists()) {
-            //     return redirect()->route('register')->with('message', 'Email đã tồn tại!');
-            // }
 
-            // chưa tt-> register
             // insert
             $model = new User();
             $model->fill($rq->all());
@@ -79,23 +90,41 @@ class AccountController extends Controller
             } else {
                 return back()->with('message', 'Đăng kí thất bại! Vui lòng thử lại!');
             }
-
-            // return redirect()->route('register')->with('message','Đăng kí tài khoản thành công!');
         }
 
         return view('layout.register');
     }
 
     // action logout
-
-    public function logout(){
-        if(session()->has('student')){
+    public function logout()
+    {
+        // hủy ss
+        if (session()->has('student')) {
             session()->pull('student');
-            return redirect()->route('login')->with('message','Đăng xuất thành công');
-        }
-        elseif(session()->has('teacher')){
+            return redirect()->route('login')->with('message', 'Đăng xuất thành công');
+        } elseif (session()->has('teacher')) {
             session()->pull('teacher');
-            return redirect()->route('login')->with('message','Đăng xuất thành công');
+            return redirect()->route('login')->with('message', 'Đăng xuất thành công');
         }
+
+        // hủy cookie
+        // if(Cookie::get('loginPassword')){
+        //     die('hi cookie');
+        // }
+
+    }
+
+    // handle set cookie
+    public function setCookie($name, $value, $time)
+    {
+        // check lưu cc
+        $response = new Response();
+        $response->withCookie($name,$value,$time);
+        return $response;
+    }
+
+    // handle get cookie
+    public function getCookie($name){
+        return Cookie::get($name);
     }
 }

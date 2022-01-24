@@ -5,7 +5,7 @@
         <div class="hello">
             <h4 class="text-center mt-3">Welcome thầy {{session('teacher')->name}} đẹp troai đến với trang quản trị Quiz test</h4>
             <h5 class="text-center text-primary m-4"><i class="fa fa-list mr-2" aria-hidden="true"></i>
-                 Danh sách bộ môn </h5>
+                 Danh sách bộ môn của bạn</h5>
         </div>
         <div class="admin-filter">
 
@@ -21,7 +21,24 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    @php
+                        $n = 1;
+                    @endphp
+                    @foreach ($listCourse as $item)
+                        <tr>
+                            <td>{{$n}}</td>
+                            <td>{{$item->id}}</td>
+                            <td><img src="" width="40px" alt="">{{$item->avatar}}</td>
+                            <td>
+                                <a href="" class="btn btn-info">Bài quiz-></a>
+                                <a href="" class="btn btn-warning">Sửa</a>
+                                <a href="" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn xóa Môn học? Tất cả bài quiz của môn cũng sẽ mất!')">Xóa</a>
+                            </td>
+                        </tr>
+                        @php
+                            $n++;
+                        @endphp
+                    @endforeach
                 </tbody>
 
             </table>
