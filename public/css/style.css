@@ -1,0 +1,111 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+body{
+    background-color: #F9F9F9 !important;
+}
+.container{
+
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-bottom: 2px solid #ccc;
+}
+.logo img{
+    width: 70px;
+}
+header .form-search > form{
+    width: 300px;
+    height: 35px;
+    padding:0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    border: 1px solid rgb(80, 79, 79);
+    border-radius: 20px;
+}
+.form-search button{
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+
+}
+.form-search input{
+    border: none;
+}
+
+/* main */
+.form-join-quiz{
+    
+}
+.form-join-quiz form{
+    width: 500px;
+
+    display: flex;
+    justify-self: center;
+    margin: 50px auto;
+}
+.form-join-quiz form input{
+    width: 300px;
+    height: 45px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding:0 10px;
+}
+
+/* course */
+.list-courses{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+}
+.list-courses .item{
+    width: 23%;
+    height: 200px;
+    border-radius:10px ;
+    box-shadow: 1px 1px 1px #ccc;
+    margin-bottom: 30px;
+}
+.list-courses .avatar{
+    height: 100px;
+}
+.list-courses .avatar img{
+    width: 100%;
+    border-radius:15px ;
+    object-fit: cover;
+}
+.course-name{
+    font-size: 1.2rem;
+    color:#fff;
+    font-weight: 600;
+    text-shadow: 2px 2px 2px #333;
+}
+.course-info span{
+    color:#fff;
+    display: block;
+    text-shadow: 2px 2px 2px #333;
+}
+/* .list-courses .avatar img:hover{
+    transform: scale(1.1);
+    transition: 1s ease-in-out;
+} */
+
+
+/* quizz- detail */
+.content-quiz .item{
+    background: #fff !important;
+    border-radius: 10px ;
+    box-shadow: 1px 2px 1px #ccc;
+
+}
+.content-quiz .item .ques{
+    
+}
