@@ -7,15 +7,26 @@ use Illuminate\Http\Request;
 
 use App\Models\Subject;
 use App\Models\Quiz;
+use App\Models\Answer;
+use App\Models\Question;
+use Illuminate\Support\Facades\DB;
 
 class QuizController extends Controller
 {
 
     // list quuiz
-    public function list(){
+    public function detail($id){
         // get data
+        $quizName = Quiz::select('name')->where('id',$id)->first();
+        $quizId = $id;
+        // danh sách câu hỏi + đáp án của quiz;
+        $contentQuiz = DB::table('quizs')
+                            ->select('questions.*','answers.*')
+                            ->join('questions','quizs.id','=','questions.quiz_id')
+                            ->join('answers','answers.question_id','=','questions.id')
+                            ->where('quizs.id',$id)->get();
 
-        return view('');
+        return view('frontend.quizs.quiz-detail',compact('contentQuiz','quizName','quizId'));
 
     }
 
@@ -44,4 +55,18 @@ class QuizController extends Controller
 
         return view('backend.quizs.create',compact('listSubject'));
     }
+
+    // edit
+    public function edit(Request $rq,$id)
+    {
+
+    }
+
+    // remove
+    public function remove($id)
+    {
+        
+    }
+
+   
 }

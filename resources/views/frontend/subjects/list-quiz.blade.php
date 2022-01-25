@@ -22,7 +22,7 @@
         <div class="alert alert-secondary">
             <span>{{$n}}.</span>
             @if (session('teacher'))
-                <a href="{{route('admin.quiz.manage',['id'=>$item->id])}}">{{$item->name}}</a>
+                <a href="{{route('admin.quiz.detail',['id'=>$item->id])}}">{{$item->name}}</a>
                 <a href="" class=" ml-3 btn btn-danger">Xóa quiz</a>
             @else
               <a href="{{route('client.quiz.detail',['id'=>$item->id])}}">{{$item->name}}</a>

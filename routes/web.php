@@ -10,6 +10,8 @@ use  App\Http\Controllers\frontend\QuizController;
 use  App\Http\Controllers\backend\DashboardController;
 use  App\Http\Controllers\backend\SubjectController as SubjectAdminController;
 use  App\Http\Controllers\backend\QuizController as QuizAdminController;
+use  App\Http\Controllers\backend\QuestionController;
+use  App\Http\Controllers\backend\AnswerController;
 
 // ==========login & register=========
 Route::any('/register',[AccountController::class,'register'])->name('register');
@@ -62,7 +64,13 @@ Route::middleware(['AuthLogin:class'])->group(function(){
             Route::any('/create',[QuizAdminController::class,'create'])->name('admin.quiz.add');
             
             // manage quiz()
-            Route::get('/manage',[QuizAdminController::class,'list'])->name('admin.quiz.manage');
+            Route::get('/quiz-detail/{id?}',[QuizAdminController::class,'detail'])->name('admin.quiz.detail');
+
+            // add quuestion
+            Route::any('/add-question/{id}',[QuestionController::class,'addQuestion'])->name('admin.quiz.add-question');
+
+             // add answer
+             Route::any('/add-answer/{id}',[AnswerController::class,'addAnswer'])->name('admin.quiz.add-answer');
 
         });
     
