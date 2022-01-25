@@ -1,9 +1,9 @@
 @extends('layout.layout')
 
-@section('page-title', 'Tạo quiz')
+@section('page-title', 'Sửa môn học')
 @section('main')
     <main>
-        <h4 class="text-center mt-4 mb-4">Tạo mới Môn học</h4>
+        <h4 class="text-center mt-4 mb-4">Chỉnh sửa Môn học</h4>
         <a href="{{route('admin.dashboard')}}" class="btn btn-info mb-3 mt-3">Danh sách</a>
         @if (session('msg'))
             <div class="alert alert-success">{{ session('msg') }}</div>
@@ -12,11 +12,11 @@
             <div class="alert alert-danger">{{ session('fail') }}</div>
         @endif
         <div class="content d-flex justify-content-center">
-            <form action="" method="POST" class="col-md-6" enctype="multipart/form-data">
+            <form action="" method="POST" class="col-md-6 mb-4" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="">Tên bộ môn</label>
-                    <input type="text" placeholder="Enter name" name="name" class="form-control" value="{{ old('name') }}">
+                    <input type="text" placeholder="Enter name" name="name" class="form-control" value="{{ old('name',$sbj['name']) }}">
                     @error('name')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -28,8 +28,13 @@
                     @error('avatar')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
+    
+                    {{-- ảnh cũ --}}
+                    <p>Ảnh cũ</p>
+                    <input type="hidden" name="avatar" value="{{$sbj['avatar']}}">
+                    <img src="{{asset('uploads/'.$sbj['avatar'])}}" alt="" width="80px">
                 </div>
-                <input type="submit" class="btn btn-primary" value="Thêm">
+                <input type="submit" class="btn btn-warning" value="Chỉnh sửa">
             </form>
         </div>
     </main>

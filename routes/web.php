@@ -8,6 +8,8 @@ use  App\Http\Controllers\frontend\QuizController;
 
 // admin
 use  App\Http\Controllers\backend\DashboardController;
+use  App\Http\Controllers\backend\SubjectController as SubjectAdminController;
+use  App\Http\Controllers\backend\QuizController as QuizAdminController;
 
 // ==========login & register=========
 Route::any('/register',[AccountController::class,'register'])->name('register');
@@ -39,6 +41,30 @@ Route::middleware(['AuthLogin:class'])->group(function(){
     Route::prefix('admin')->group(function(){
     
         Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
+
+        // Subject
+        Route::prefix('subject')->group(function(){
+
+            // insert
+            Route::any('/add',[SubjectAdminController::class,'create'])->name('admin.subject.add');
+            
+            // remove
+            Route::get('/remove/{id?}',[SubjectAdminController::class,'remove'])->name('admin.subject.del');
+            
+            // edit
+            Route::any('/edit/{id?}',[SubjectAdminController::class,'edit'])->name('admin.subject.edit');
+        });
+
+        // Quizs controller
+        Route::prefix('quizs')->group(function(){
+
+            // list
+            Route::any('/create',[QuizAdminController::class,'create'])->name('admin.quiz.add');
+            
+            // manage quiz()
+            Route::get('/manage',[QuizAdminController::class,'list'])->name('admin.quiz.manage');
+
+        });
     
     });
 });

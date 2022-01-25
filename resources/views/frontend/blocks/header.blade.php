@@ -33,7 +33,7 @@
                 </div>
             </div>
         @elseif(Session::get('teacher'))
-            <a href="" class="btn btn-outline-secondary">Tạo quiz +</a>
+            <a href="{{route('admin.quiz.add')}}" class="btn btn-outline-secondary">Tạo quiz +</a>
             <div class="dropdown myProfile ml-3">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     Cá nhân

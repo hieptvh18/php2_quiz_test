@@ -9,8 +9,12 @@
         </div>
         <div class="admin-filter">
 
-        </div>
+        </div>  
+        @if (session('msg'))
+            <div class="alert alert-success">{{session('msg')}}</div>
+        @endif
         <div class="content">
+            <a href="{{route('admin.subject.add')}}" class="btn btn-secondary">Thêm Môn Học +</a>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -27,12 +31,12 @@
                     @foreach ($listCourse as $item)
                         <tr>
                             <td>{{$n}}</td>
-                            <td>{{$item->id}}</td>
-                            <td><img src="" width="40px" alt="">{{$item->avatar}}</td>
+                            <td>{{$item->name}}</td>
+                            <td><img src="{{asset('uploads/'.$item->avatar)}}" width="60px" alt=""></td>
                             <td>
-                                <a href="" class="btn btn-info">Bài quiz-></a>
-                                <a href="" class="btn btn-warning">Sửa</a>
-                                <a href="" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn xóa Môn học? Tất cả bài quiz của môn cũng sẽ mất!')">Xóa</a>
+                                <a href="{{route('client.subject.list',['id'=>$item->id])}}" class="btn btn-info">Bài quiz-></a>
+                                <a href="{{route('admin.subject.edit',['id'=>$item->id])}}" class="btn btn-warning">Sửa</a>
+                                <a href="{{route('admin.subject.del',['id'=>$item->id])}}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn xóa Môn học? Tất cả bài quiz của môn cũng sẽ mất!')">Xóa</a>
                             </td>
                         </tr>
                         @php

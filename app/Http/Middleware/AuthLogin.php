@@ -18,11 +18,7 @@ class AuthLogin
     public function handle(Request $request, Closure $next)
     {
         // check cookie 
-        if (Cookie::get('loginEmail')){
-            echo ('đã tt cookie');
-        }else{
-            echo ('chưa tt cookie');
-        }
+        
         // check đã login mới dc vào app
         if(!$request->session()->has('student') && !$request->session()->has('teacher')){
             return redirect()->route('login')->with('message','Mày phải login để vào web app này!');

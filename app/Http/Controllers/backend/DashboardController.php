@@ -14,10 +14,7 @@ class DashboardController extends Controller
         // get data
         $idUser = $rq->session()->get('teacher');
 
-        $listCourse = DB::table('users')->select('subjects.*')
-                            ->join('subjects','subjects.author_id','=','users.id')
-                            ->where('users.id',$idUser->id)
-                            ->get();     
+        $listCourse = Subject::all();     
 
         return view('backend.dashboard.index',compact('listCourse'));
     }

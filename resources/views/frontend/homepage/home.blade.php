@@ -19,7 +19,7 @@
         @foreach ($listCourse as $item)
         <a href="{{route('client.subject.list',['id'=>$item->id])}}" class="item">
             <div class="avatar">
-                <img src="../public/images/java-640x427.jpg" alt="">
+                <img src="{{asset('uploads/'.$item->avatar)}}" alt="">
             </div>
             <div class="course-name ml-2">
                 {{$item->name}}
