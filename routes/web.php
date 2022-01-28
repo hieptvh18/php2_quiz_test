@@ -38,7 +38,7 @@ Route::middleware(['AuthLogin:class'])->group(function(){
         Route::any('quiz/exam/{id?}',[ExamController::class,'exam'])->name('client.quiz.exam');
         
         // ctrl gửi đáp án quiz
-        Route::get('quiz/exam/post',[ExamController::class,'examPost'])->name('client.quiz.exam.post');
+        Route::any('exam/post',[ExamController::class,'examPost'])->name('client.exam.post');
 
     });
     

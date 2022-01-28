@@ -19,8 +19,9 @@
                 <h6 class="mr-2">Thời gian còn lại:</h6>
                 <span id="js-timeout">{{ $quiz->duration_minutes }} phút</span>
             </div>
-            <form action='{{route('client.quiz.exam.post')}}' method="POST" name="exam" id="formExam">
+            <form action="/join/exam/post" method="POST" id="formExam">
                 @csrf
+                <input type="hidden" name="quiz_id" value="{{$quiz->id}}">
 
                 {{-- lặp toàn bộ câu hỏi, lồng bên trong là đáp án ok --}}
                 @foreach ($listQues as $key => $q)
@@ -66,7 +67,7 @@
                     sec = 60;
                     if (minute == 0) {
                         form.submit();
-                        alert('Kết thúc thời gian làm bài!')
+                        // alert('Kết thúc thời gian làm bài!')
                         // submit và redirect đi kết quả bài làm
                         return
                     }

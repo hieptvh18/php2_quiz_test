@@ -15,6 +15,6 @@ class QuizController extends Controller
     // màn hình làm quiz của client
     public function index(){
         // get data
-      
+        
     }
 }

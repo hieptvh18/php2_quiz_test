@@ -15,10 +15,10 @@ class ExamController extends Controller
 {
     //action làm quiz của student
 
-    public function exam($id)
+    public function exam(Request $rq,$id)
     {
         // get data
-        $quiz = Quiz::select('name','duration_minutes')->where('id', $id)->first();
+        $quiz = Quiz::select('quizs.*')->where('id', $id)->first();
         $quizId = $id;
         
         if(!$quiz){
@@ -37,16 +37,35 @@ class ExamController extends Controller
             $listQues = Question::select('questions.*')->where('quiz_id',$id)->get();
         }
 
-
         return view('frontend.exam.exam', compact('quiz', 'listQues','quizId'));
     }
 
     // handle result post
     public function examPost(Request $rq)
     {
-        
+        // save info examer
+        // code....
+        if($rq->isMethod('post')){
+            // user id
+            if(session()->has('student')){
+                die('student');
+            }else{
+                die('teacher');
 
-        die('đã post');
+            }
+
+            // quiz_id
+            $quiz_id=$rq->input('quiz_id');
+
+            // ngày làm <-> kết thúc
+            $start_time = date('Y-m-d H:i:s');
+            $end_time = date('Y-m-d H:i:s');
+
+            // tính score
+
+
+        }
+
     }
 
   
