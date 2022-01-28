@@ -47,6 +47,7 @@ class ExamController extends Controller
         // code....
         if($rq->isMethod('post')){
             // user id
+            dd($rq->input());
             if(session()->has('student')){
                 die('student');
             }else{
@@ -61,7 +62,9 @@ class ExamController extends Controller
             $start_time = date('Y-m-d H:i:s');
             $end_time = date('Y-m-d H:i:s');
 
-            // tính score
+            // tính score(1 là ko làm câu nào 2 là có làm)
+           
+
 
 
         }

@@ -25,6 +25,10 @@
 
                 {{-- lặp toàn bộ câu hỏi, lồng bên trong là đáp án ok --}}
                 @foreach ($listQues as $key => $q)
+
+                    {{-- gán id của từng câu hỏi --}}
+                    <input type="hidden" name="questions_id{{ $key + 1 }}" value="{{ $q->id }}">
+
                     <div class="item  p-3 mb-3">
                         <div class="ques mb-3 alert alert-secondary">
                             {{ $key + 1 }}.{{ $q->name }} ?
@@ -37,8 +41,8 @@
                         <div class="list-answer pl-3 pr-3">
                             @foreach (getAnswer($q->id) as $key2 => $a)
                                 <p>
-                                    <input type="radio" id="ans{{ $key2 + 1 }}" name="answer" value="">
-                                    <label for="ans{{ $key2 + 1 }}">{{ $key + 1 }}.{{ $key2 + 1 }}.
+                                    <input type="radio" id="ans{{$key+1}}_{{ $key2 + 1 }}" name="answer{{$key+1}}" value="{{$a->id}}">
+                                    <label for="ans{{$key+1}}_{{ $key2 + 1 }}">{{ $key + 1 }}.{{ $key2 + 1 }}.
                                         {{ $a->content }};</label>
                                 </p>
                             @endforeach
@@ -67,7 +71,7 @@
                     sec = 60;
                     if (minute == 0) {
                         form.submit();
-                        // alert('Kết thúc thời gian làm bài!')
+                        alert('Kết thúc thời gian làm bài!')
                         // submit và redirect đi kết quả bài làm
                         return
                     }

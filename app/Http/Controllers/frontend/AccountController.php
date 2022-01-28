@@ -57,7 +57,7 @@ class AccountController extends Controller
             return back()->with('fail', 'Fail');
         }
 
-        return view('layout.login');
+        return view('auth.login');
     }
 
     // action register acc
@@ -92,7 +92,7 @@ class AccountController extends Controller
             }
         }
 
-        return view('layout.register');
+        return view('auth.register');
     }
 
     // action logout

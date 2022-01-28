@@ -23,7 +23,7 @@
                     @if (session('teacher'))
 
                         {{-- đến thời gian làm bài ms mở --}}
-                        @if (strtotime($item->start_time) >= strtotime(date('Y-m-d H:i:s')) && strtotime($item->end_time))
+                        @if (strtotime(date('Y-m-d H:i:s')) >= strtotime($item->start_time)  && strtotime(date('Y-m-d H:i:s')) <= strtotime($item->end_time))
                             <span>{{ $item->name }} <a class="btn btn-success"
                                     href="{{ route('client.quiz.exam', ['id' => $item->id]) }}"
                                     onclick="return confirm('Bắt đầu vào làm quiz?')"></a></span>
@@ -38,7 +38,7 @@
 
                     @else
 
-                        @if (strtotime($item->start_time) >= strtotime(date('Y-m-d H:i:s')) && strtotime($item->end_time))
+                        @if (strtotime(date('Y-m-d H:i:s')) >= strtotime($item->start_time)  && strtotime(date('Y-m-d H:i:s')) <= strtotime($item->end_time))
                             <span>{{ $item->name }} <a class="btn btn-success"
                                     href="{{ route('client.quiz.exam', ['id' => $item->id]) }}"
                                     onclick="return confirm('Bắt đầu vào làm quiz?')">Bắt đầu làm</a></span>
