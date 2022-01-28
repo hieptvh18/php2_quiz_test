@@ -17,14 +17,12 @@ class SubjectController extends Controller
         // get data
         // nếu tồn tại sp thì ms get ko thì rd
         if(DB::table('subjects')->where('id',$id)->exists()){
-            $myQuiz = DB::table('quizs')->where('subject_id',$id)->get();
+            $myQuiz = DB::table('quizs')->where('subject_id',$id)->where('status',1)->get();
 
             $quizTitle = DB::table('subjects')
                             ->select('name')
                             ->where('id',$id)
                             ->first();
-
-           
             
         }else{
             // ko tồn tại

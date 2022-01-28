@@ -5,6 +5,7 @@ use  App\Http\Controllers\frontend\HomeController;
 use  App\Http\Controllers\frontend\SubjectController;
 use  App\Http\Controllers\frontend\AccountController;
 use  App\Http\Controllers\frontend\QuizController;
+use  App\Http\Controllers\exam\ExamController;
 
 // admin
 use  App\Http\Controllers\backend\DashboardController;
@@ -20,6 +21,7 @@ Route::any('/logout',[AccountController::class,'logout'])->name('logout');
 
 //=========== define route frontend ==========
 // group all route yêu cầu login
+
 Route::middleware(['AuthLogin:class'])->group(function(){
 
     Route::get('/',[HomeController::class,'index'])->name('client.home') ;
@@ -33,13 +35,15 @@ Route::middleware(['AuthLogin:class'])->group(function(){
         Route::get('subject/detail/{id?}',[SubjectController::class,'detail'])->where(['id' => '[0-9]+'])->name('client.subject.list');
         
         // màn hình làm quiz
-        Route::any('quiz/detail/{id?}',[QuizController::class,'index'])->name('client.quiz.detail');
+        Route::any('quiz/exam/{id?}',[ExamController::class,'exam'])->name('client.quiz.exam');
+        
+        // ctrl gửi đáp án quiz
+        Route::get('quiz/exam/post',[ExamController::class,'examPost'])->name('client.quiz.exam.post');
+
     });
     
+    
     //=========== define route backend ==========
-    
-    // => handle middleware check login
-    
     Route::prefix('admin')->group(function(){
     
         Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
@@ -55,13 +59,25 @@ Route::middleware(['AuthLogin:class'])->group(function(){
             
             // edit
             Route::any('/edit/{id?}',[SubjectAdminController::class,'edit'])->name('admin.subject.edit');
+
+            // màn hình danh sách các bài quiz của từng môn
+            Route::get('/list-quiz/{id}',[SubjectAdminController::class,'listQuiz'])->where(['id' => '[0-9]+'])->name('admin.subject.list-quiz');
         });
 
         // Quizs controller
         Route::prefix('quizs')->group(function(){
 
             // list
+            Route::any('/list',[QuizAdminController::class,'list'])->name('admin.quiz.list');
+
+            // add
             Route::any('/create',[QuizAdminController::class,'create'])->name('admin.quiz.add');
+
+            // edit
+            Route::any('/edit/{id}',[QuizAdminController::class,'edit'])->name('admin.quiz.edit');
+            
+            // remove quiz
+            Route::any('/remove/{id}',[QuizAdminController::class,'remove'])->name('admin.quiz.remove');
             
             // manage quiz()
             Route::get('/quiz-detail/{id?}',[QuizAdminController::class,'detail'])->name('admin.quiz.detail');
@@ -69,10 +85,20 @@ Route::middleware(['AuthLogin:class'])->group(function(){
             // add quuestion
             Route::any('/add-question/{id}',[QuestionController::class,'addQuestion'])->name('admin.quiz.add-question');
 
+            // remove quuestion
+            Route::any('/remove-question/{id}',[QuestionController::class,'removeQuestion'])->name('admin.quiz.remove-question');
+
              // add answer
              Route::any('/add-answer/{id}',[AnswerController::class,'addAnswer'])->name('admin.quiz.add-answer');
+             
+              // add answer
+              Route::any('/remove-answer/{id}',[AnswerController::class,'removeAnswer'])->name('admin.quiz.remove-answer');
 
         });
+
+
+
+
     
     });
 });

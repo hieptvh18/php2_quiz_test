@@ -118,4 +118,26 @@ class SubjectController extends Controller
             return back()->with('msg', 'Xóa thành công 1 môn học');
         }
     }
+
+    // list quiz của môn học
+    public function listQuiz($id){
+        // get data
+        // nếu tồn tại sp thì ms get ko thì rd
+        if(DB::table('subjects')->where('id',$id)->exists()){
+            $myQuiz = DB::table('quizs')->where('subject_id',$id)->get();
+
+            $quizTitle = DB::table('subjects')
+                            ->select('name')
+                            ->where('id',$id)
+                            ->first();
+
+           
+            
+        }else{
+            // ko tồn tại
+           return redirect(route('admin.dashboard'))->with('msg','Không tồn tại sản phẩm');
+        }
+
+        return view('backend.subjects.list-quiz',compact('myQuiz','quizTitle'));
+    }
 }

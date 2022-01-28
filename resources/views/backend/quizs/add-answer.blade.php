@@ -1,8 +1,8 @@
-@extends('layout.layout')
+@extends('layout.layout-admin')
 
 @section('page-title', 'Tạo câu hỏi')
 @section('main')
-    <main>
+    <main class="col-md-9">
         {{--  thêm câu hỏi và đáp án cho quiz --}}
 
         {{-- <h4 class="text-center mt-4">Thêm câu hỏi vào quizs '{{$quizName}}'</h4> --}}
@@ -17,6 +17,9 @@
             <form action="" method="POST" class="col-md-6 " enctype="multipart/form-data">
                 @csrf
                 <h3 class="m-3 text-center">Thêm câu trả lời cho câu hỏi '{{$question_name->name}}'</h3>
+                @if ($q->img)
+                    <img src="{{asset('uploads/'.$question->img)}}" width="80px" alt="">   
+                @endif
                 <div class="form-group">
                     <label for="">Nội dung (éo bt nd j :)))</label>
                     <textarea name="content" id="" cols="30" rows="2" class="form-control" placeholder="Nội dung câu trả lời">{{old('content')}}</textarea>
@@ -30,10 +33,12 @@
                 <div class="form-group">
                     <label for="">Đây là câu trả lời? </label>
                     <br>
-                    <input type="radio" name="is_correct" id="cr1" class="mr-3"><label for="cr1">Đúng</label>
+                    <input type="radio" value="1" name="is_correct" id="cr1" class="mr-3"><label for="cr1">Đúng</label>
                     <br>
-                    <input type="radio" name="is_correct" id="cr2" class="mr-3"><label for="cr2">Sai</label>
-                   
+                    <input type="radio" value="0" name="is_correct" id="cr2" class="mr-3"><label for="cr2">Sai</label>
+                    @error('is_correct')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary mb-4">Thêm</button>

@@ -1,11 +1,12 @@
-@extends('layout.layout')
+@extends('layout.layout-admin')
 
 @section('page-title', 'Tạo câu hỏi')
 @section('main')
-    <main>
+    <main class="col-md-9">
         {{--  thêm câu hỏi và đáp án cho quiz --}}
 
         <h4 class="text-center mt-4">Thêm câu hỏi vào quizs '{{$quizName->name}}'</h4>
+       
         @if (session('msg'))
             <div class="alert alert-success">{{ session('msg') }}</div>
         @endif

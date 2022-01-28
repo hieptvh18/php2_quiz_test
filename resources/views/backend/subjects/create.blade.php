@@ -1,8 +1,8 @@
-@extends('layout.layout')
+@extends('layout.layout-admin')
 
 @section('page-title', 'Tạo quiz')
 @section('main')
-    <main>
+    <main class="col-md-9">
         <h4 class="text-center mt-4 mb-4">Tạo mới Môn học</h4>
         <a href="{{route('admin.dashboard')}}" class="btn btn-info mb-3 mt-3">Danh sách</a>
         @if (session('msg'))

@@ -1,11 +1,11 @@
 @extends('layout.layout-admin')
-@section('page-title', 'Quản trị')
+@section('page-title', 'Danh sách câu hỏi')
 @section('main')
     <main class="col-md-9">
         <div class="hello">
             <h4 class="text-center mt-3">Welcome thầy {{session('teacher')->name}} đẹp troai đến với trang quản trị Quiz test</h4>
             <h5 class="text-center text-primary m-4"><i class="fa fa-list mr-2" aria-hidden="true"></i>
-                 Danh sách bộ môn của bạn</h5>
+                 Danh sách Câu hỏi của quiz...</h5>
         </div>
         <div class="admin-filter">
 
@@ -19,8 +19,9 @@
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Tên môn học</th>
-                        <th>Ảnh đại diện</th>
+                        <th>Tên quizs</th>
+                        <th>Tên câu hỏi</th>
+                        <th>Ảnh câu hỏi</th>
                         <th>Chức năng</th>
                     </tr>
                 </thead>
@@ -34,7 +35,7 @@
                             <td>{{$item->name}}</td>
                             <td><img src="{{asset('uploads/'.$item->avatar)}}" width="60px" alt=""></td>
                             <td>
-                                <a href="{{route('admin.subject.list-quiz',['id'=>$item->id])}}" class="btn btn-info">Bài quiz-></a>
+                                <a href="{{route('client.subject.list',['id'=>$item->id])}}" class="btn btn-info">Bài quiz-></a>
                                 <a href="{{route('admin.subject.edit',['id'=>$item->id])}}" class="btn btn-warning">Sửa</a>
                                 <a href="{{route('admin.subject.del',['id'=>$item->id])}}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn xóa Môn học? Tất cả bài quiz của môn cũng sẽ mất!')">Xóa</a>
                             </td>

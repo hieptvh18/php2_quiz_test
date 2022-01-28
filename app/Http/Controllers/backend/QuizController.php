@@ -14,11 +14,23 @@ use Illuminate\Support\Facades\DB;
 class QuizController extends Controller
 {
 
-    // list quuiz
+    // list
+    public function list(){
+        // get data
+        $listQuiz = Quiz::select('subjects.name as sbj_name','quizs.*')
+                            ->join('subjects','subjects.id','=','quizs.subject_id')
+                            ->get();
+
+        return view('backend.quizs.list-quiz',compact('listQuiz'));
+    }
+
+    // nội dung quiz
     public function detail($id){
         // get data
-        $quizName = Quiz::select('name')->where('id',$id)->first();
+        $quizName = Quiz::select('name')->where('id','=',$id)->first();
+
         $quizId = $id;
+        $listQues = Question::select('questions.*')->where('quiz_id',$id)->get();
         // danh sách câu hỏi + đáp án của quiz;
         $contentQuiz = DB::table('quizs')
                             ->select('questions.*','answers.*')
@@ -26,7 +38,7 @@ class QuizController extends Controller
                             ->join('answers','answers.question_id','=','questions.id')
                             ->where('quizs.id',$id)->get();
 
-        return view('frontend.quizs.quiz-detail',compact('contentQuiz','quizName','quizId'));
+        return view('backend.quizs.quiz-detail',compact('contentQuiz','quizName','quizId','listQues', ));
 
     }
 
@@ -59,14 +71,64 @@ class QuizController extends Controller
     // edit
     public function edit(Request $rq,$id)
     {
+        // get dtaaa
+        $myQuiz = Quiz::find($id);
+        $listSubject = Subject::all();
 
+        if($rq->isMethod('post')){
+
+            // dd($rq->input());
+            $rq->validate([
+                'name'=>'required|max:100',
+                'duration_minutes'=>'required',
+                'start_time'=>'required',
+                'end_time'=>'required',
+            ]); 
+
+            $quizModel = Quiz::find($id);
+            $quizModel->fill($rq->all());
+            $save = $quizModel->save(); 
+
+            if($save){
+                return back()->with('msg','Sửa thành công 1 quiz mới!');
+            }
+            return back()->with('fail','Sửa thất bại, vui lòng thử lại!');
+        }
+
+        return view('backend.quizs.edit',compact('myQuiz','listSubject'));
     }
 
     // remove
     public function remove($id)
     {
-        
+        if(Quiz::find($id)){
+
+            // xóa question and answer của quiz
+            $myQues = Quiz::select('questions.*')
+                                ->join('questions','questions.quiz_id','=','quizs.id')
+                                ->where('quizs.id',$id)
+                                ->get();
+            $myAns = Quiz::select('answers.*')
+                                ->join('questions','questions.quiz_id','=','quizs.id')
+                                ->join('answers','questions.id','=','answers.id')
+                                ->where('quizs.id',$id)
+                                ->get();
+            foreach($myQues as $item){
+                Question::destroy($item->id);
+            }
+            foreach($myAns as $item){
+                Answer::destroy($item->id);
+            }
+
+            Quiz::destroy($id);
+
+            return back()->with('msg','Xóa thành công 1 bộ quiz');
+
+        }else{
+            return back()->with('fail','Quiz không tồn tại');
+        }
     }
 
+ 
    
 }

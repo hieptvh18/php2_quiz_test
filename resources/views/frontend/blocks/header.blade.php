@@ -10,7 +10,7 @@
                 <input type="search" placeholder="Tìm bài quiz">
             </div>
             <button type="submit" name="btnSearch">
-                <i class="fas fa-search"></i>
+                <i class="fa fa-search"></i>
             </button>
         </form>
     </div>
@@ -39,7 +39,7 @@
                     Cá nhân
                 </button>
                 <div class="dropdown-menu">
-                    {{-- <a class="dropdown-item" href="#">Hồ sơ</a> --}}
+                    <a class="dropdown-item" href="#">Hồ sơ làm bài</a>
                     <a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a>
                 </div>
             </div>

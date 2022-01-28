@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Quiz;
 use App\Models\Question;
+use App\Models\Answer;
 
 class QuestionController extends Controller
 {
@@ -42,5 +43,26 @@ class QuestionController extends Controller
         }
 
         return view('backend.quizs.add-question',compact('quizName','quizId'));
+    }
+
+
+    // remove
+
+    public function removeQuestion($id){
+
+        // code
+        if(Question::find($id)){
+            // xóa đáp án
+            $listAns = Question::select('answers.id')->join('answers','answers.question_id','=','questions.id')->where('questions.id',$id)->get();
+            
+            foreach($listAns as $item){
+                Answer::destroy($item->id);
+            }
+            // xóa câu hỏi
+            Question::destroy($id);
+
+            return back()->with('msg','Xóa thành công 1 câu hỏi!');
+        }
+        return back()->with('fail','Xóa không thành công!');
     }
 }
