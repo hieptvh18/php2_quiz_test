@@ -26,7 +26,7 @@
                         @if (strtotime(date('Y-m-d H:i:s')) >= strtotime($item->start_time)  && strtotime(date('Y-m-d H:i:s')) <= strtotime($item->end_time))
                             <span>{{ $item->name }} <a class="btn btn-success"
                                     href="{{ route('client.quiz.exam', ['id' => $item->id]) }}"
-                                    onclick="return confirm('Bắt đầu vào làm quiz?')"></a></span>
+                                    onclick="return confirm('Bắt đầu vào làm quiz?')">Băt đầu làm</a></span>
                         @else
                             <div class="">{{ $item->name }} <span class="text-danger ml-3">Đã hết hạn làm
                                     bài!</span></div>

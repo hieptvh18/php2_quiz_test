@@ -51,10 +51,10 @@
                 @error('password')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <div class="remember">
+                {{-- <div class="remember">
                     <input type="checkbox" name="remember" id="remember" class="mr-2">
                     <label for="remember">Nhớ thông tin</label>
-                </div>
+                </div> --}}
                 <input type="submit" class="fadeIn fourth" value="Đăng nhập">
             </form>
 

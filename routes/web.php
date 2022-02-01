@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\frontend\HomeController;
 use  App\Http\Controllers\frontend\SubjectController;
-use  App\Http\Controllers\frontend\AccountController;
+use  App\Http\Controllers\auth\AccountController;
 use  App\Http\Controllers\frontend\QuizController;
 use  App\Http\Controllers\exam\ExamController;
 
