@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('layout.layout-exam')
 @section('page-title', 'For student')
 @section('main')
 

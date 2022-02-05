@@ -28,6 +28,10 @@ Route::any('/logout',[AccountController::class,'logout'])->name('logout');
 Route::middleware(['AuthLogin:class'])->group(function(){
 
     Route::get('/',[HomeController::class,'index'])->name('client.home') ;
+
+    // exam result
+    Route::get('exam/result',[ExamController::class,'examResult'])->name('exam.result');
+
     
     // group route client
     Route::prefix('join')->group(function(){

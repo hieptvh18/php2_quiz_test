@@ -83,39 +83,46 @@ class ExamController extends Controller
                     } else {
                         $false++;
                     }
-
-                    // lưu vô
                 }
             }
 
-            // tính điểm * vs điểm mốc
-            $total_point = $minimumScore * $true;
+            // // tính điểm * vs điểm mốc
+            // $total_point = $minimumScore * $true;
 
-            // lưu thông tin vô student_quiz
-            $student_quiz = new StudentQuiz;
-            $student_quiz->student_id = $student_id;
-            $student_quiz->quiz_id = $quiz_id;
-            $student_quiz->start_time = $start_time;
-            $student_quiz->end_time = $end_time;
-            $student_quiz->score = $total_point;
+            // // lưu thông tin vô student_quiz
+            // $student_quiz = new StudentQuiz;
+            // $student_quiz->student_id = $student_id;
+            // $student_quiz->quiz_id = $quiz_id;
+            // $student_quiz->start_time = $start_time;
+            // $student_quiz->end_time = $end_time;
+            // $student_quiz->score = $total_point;
 
-            $student_quiz->save();
+            // $student_quiz->save();
             
-            // lưu vô student_quiz_detail
-            $student_quiz_detail = new StudentQuizDetail;
+            // // lưu vô student_quiz_detail
+            // $student_quiz_detail = new StudentQuizDetail;
             // $student_quiz_detail->student_quiz_id = $student_quiz->id;
-            // $student_quiz_detail->question_id = ;
-            // $student_quiz_detail->student_quiz_id = $student_quiz->id;
+            
+            // for ($n = 1; $n <= count($dataRequest); $n++) {
+                
+            //     $student_quiz_detail->question_id = $dataRequest['questions_id' . $n];
+            //     // lặp ra các câu hỏi
+            //     if (isset($dataRequest['questions_id' . $n]) && isset($dataRequest['answers' . $n])) {
+            //         // lưu vô
+            //         $student_quiz_detail->answer_id = $dataRequest['answers' . $n];
+            //     }
+            // }
+            // $student_quiz_detail->save();
 
 
-            echo $total_point;
-            die;
+            return redirect(route('exam.result'))->with('msg','Đã hoàn thành bài quiz');
         }
     }
 
     // màn hình kết quả
-    public function examResult(){
+    public function examResult(Request $rq){
 
+        return view('exam.exam-result');
     }
 
     // màn hình chi tiết kết quả
