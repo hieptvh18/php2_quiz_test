@@ -5,11 +5,11 @@
         </a>
     </div>
     <div class="form-search">
-        <form action="">
+        <form action="{{route('search.quiz')}}">
             <div class="form-inpt">
-                <input type="search" placeholder="Tìm bài quiz">
+                <input type="search" name="key_search" value="{{old('key_search')}}" placeholder="Tìm khóa học">
             </div>
-            <button type="submit" name="btnSearch">
+            <button type="submit" name="">
                 <i class="fa fa-search"></i>
             </button>
         </form>

@@ -28,7 +28,7 @@
                 @foreach ($listQues as $key => $q)
 
                     {{-- gán id của từng câu hỏi --}}
-                    <input type="hidden" name="question_id{{ $key + 1 }}" value="{{ $q->id }}">
+                    <input type="hidden" name="questions_id{{ $key + 1 }}" value="{{ $q->id }}">
 
                     <div class="item  p-3 mb-3">
                         <div class="ques mb-3 alert alert-secondary">
@@ -43,10 +43,11 @@
                             @foreach (getAnswer($q->id) as $key2 => $a)
                                 <p>
                                     <input type="radio" id="ans{{ $key + 1 }}_{{ $key2 + 1 }}"
-                                        name="answer{{ $key + 1 }}" value="{{ $a->id }}">
+                                        name="answers{{ $key + 1 }}" value="{{ $a->id }}">
                                     <label
                                         for="ans{{ $key + 1 }}_{{ $key2 + 1 }}">{{ $key + 1 }}.{{ $key2 + 1 }}.
-                                        {{ $a->content }};</label>
+                                        {{ $a->content }};
+                                    </label>
                                 </p>
                             @endforeach
                         </div>

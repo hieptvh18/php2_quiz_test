@@ -12,7 +12,7 @@
             <div class="alert alert-danger">{{ session('fail') }}</div>
         @endif
         <div class="content d-flex justify-content-center">
-            <form action="" method="POST" class="col-md-6" enctype="multipart/form-data">
+            <form action="" method="POST" class="col-md-6 form" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="">Tên bộ môn</label>
@@ -25,6 +25,7 @@
                 <div class="form-group">
                     <label for="">Ảnh đại diện</label>
                     <input type="file" name="avatar" class="form-control">
+                    <div class="img-preview"></div>
                     @error('avatar')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -33,4 +34,17 @@
             </form>
         </div>
     </main>
+    <script>
+        const img = $("input[name=avatar]");
+        const imgView = $('.img-preview');
+
+        // reset
+        $('input[type="file"][name="avatar"]').val('');
+        // image preview
+        $('input[type="file"][name="avatar"]').on('change', (e)=>{
+            
+        });
+
+
+    </script>
 @endsection

@@ -6,13 +6,13 @@
 <main>
     <div class="form-join-quiz">
         <form action="">
-            <input type="search" name="key_join" placeholder="Nhập mã lớp" required>
+            <input type="search" name="key_seach"  placeholder="Nhập tên bài quiz" required>
             <button type="submit" name="btnJoin" class="btn btn-info">Tham gia</button>
         </form>
     </div>
 
     <!-- list courses -->
-    <h4>Khóa học của bạn</h4>
+    <h4>{{$page_title}}</h4>
     <div class="list-courses">
 
         {{-- lặp + render --}}

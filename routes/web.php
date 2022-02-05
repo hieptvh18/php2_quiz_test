@@ -14,6 +14,9 @@ use  App\Http\Controllers\backend\QuizController as QuizAdminController;
 use  App\Http\Controllers\backend\QuestionController;
 use  App\Http\Controllers\backend\AnswerController;
 
+// ajax
+use App\Http\Controllers\handle\AjaxController;
+
 // ==========login & register=========
 Route::any('/register',[AccountController::class,'register'])->name('register');
 Route::any('/login',[AccountController::class,'login'])->name('login');
@@ -25,17 +28,21 @@ Route::any('/logout',[AccountController::class,'logout'])->name('logout');
 Route::middleware(['AuthLogin:class'])->group(function(){
 
     Route::get('/',[HomeController::class,'index'])->name('client.home') ;
+    
     // group route client
     Route::prefix('join')->group(function(){
     
         // home
         Route::get('/',[HomeController::class,'index'])->name('client.home');
+
+        // tìm kiếm
+        Route::get('/',[HomeController::class,'index'])->name('search.quiz');
         
         // màn hình danh sách các bài quiz của từng môn
         Route::get('subject/detail/{id?}',[SubjectController::class,'detail'])->where(['id' => '[0-9]+'])->name('client.subject.list');
         
         // màn hình làm quiz
-        Route::any('quiz/exam/{id?}',[ExamController::class,'exam'])->name('client.quiz.exam');
+        Route::any('quiz/exam/{id?}',[ExamController::class,'examPreview'])->name('client.quiz.exam');
         
         // ctrl gửi đáp án quiz
         Route::any('exam/post',[ExamController::class,'examPost'])->name('client.exam.post');
@@ -101,6 +108,9 @@ Route::middleware(['AuthLogin:class'])->group(function(){
 
     
     });
+
+    // ============================route handle ajax==============
+    Route::post('ajax/previewImg',[AjaxController::class,'previewImg'])->name('ajax.previewImg');
 });
 
 
