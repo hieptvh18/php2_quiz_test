@@ -24,14 +24,6 @@ class SubjectController extends Controller
                             ->where('id',$id)
                             ->first();
 
-            // test time
-            foreach($myQuiz as $item){
-                // dd(strtotime(date('Y-m-d H:i:s')));
-                // start = 1643191080
-                // end = 1644148680
-                // now = 1643361217
-                
-            }
         }else{
             // ko tồn tại
            return redirect(route('client.home'))->with('msg','Không tồn tại bài quiz');

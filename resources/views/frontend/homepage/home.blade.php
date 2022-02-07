@@ -6,8 +6,8 @@
 <main>
     <div class="form-join-quiz">
         <form action="">
-            <input type="search" name="key_seach"  placeholder="Nhập tên bài quiz" required>
-            <button type="submit" name="btnJoin" class="btn btn-info">Tham gia</button>
+            <input type="search" name="key_search"  placeholder="Nhập tên bài quiz" required>
+            <button type="submit" class="btn btn-info">Tìm kiếm</button>
         </form>
     </div>
 

@@ -23,10 +23,12 @@ class QuizController extends Controller
     }
 
     // list
-    public function list(){
+    public function list(Request $rq){
         // get data
+        $idUser = $rq->session()->get('teacher');
         $listQuiz = Quiz::select('subjects.name as sbj_name','quizs.*')
                             ->join('subjects','subjects.id','=','quizs.subject_id')
+                            ->where('author_id',$idUser->id)
                             ->get();
 
         return view('backend.quizs.list-quiz',compact('listQuiz'));

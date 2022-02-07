@@ -21,7 +21,7 @@
             <a href="{{ route('admin.dashboard') }}" class="mr-3">Quản trị</a>
         @endif
     </div>
-    <div class="profile d-flex">
+    <div class="profile d-flex mr-3">
         @if (Session::get('student'))
             <div class="dropdown myProfile ml-3">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -39,7 +39,7 @@
                     Cá nhân
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Hồ sơ làm bài</a>
+                    <a class="dropdown-item" href="#">Lịch sử</a>
                     <a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a>
                 </div>
             </div>

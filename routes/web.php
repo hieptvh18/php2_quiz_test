@@ -93,7 +93,7 @@ Route::middleware(['AuthLogin:class'])->group(function(){
             // remove quiz
             Route::any('/remove/{id}',[QuizAdminController::class,'remove'])->name('admin.quiz.remove');
             
-            // manage quiz()
+            // quiz detail
             Route::get('/quiz-detail/{id?}',[QuizAdminController::class,'detail'])->name('admin.quiz.detail');
 
             // add quuestion

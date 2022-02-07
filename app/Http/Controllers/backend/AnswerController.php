@@ -17,6 +17,9 @@ class AnswerController extends Controller
         // get data
         $question = Question::select('questions.*')->where('id',$id)->first();
         $question_id = $id;
+        $quiz_id = Question::select('quizs.id')
+                    ->join('quizs','quizs.id','questions.quiz_id')
+                    ->where('questions.id',$question_id)->first();
         $question_name = Question::select('name')->where('id',$id)->first(); 
         if($rq->isMethod('post')){
             $rq->validate([
@@ -26,7 +29,6 @@ class AnswerController extends Controller
             // add answers
             $ans = new Answer();
 
-            // ...
             $ans->fill($rq->all());
 
             $save = $ans->save();
@@ -45,7 +47,7 @@ class AnswerController extends Controller
 
         }
 
-        return view('backend.quizs.add-answer',compact('question_id','question_name','question'));
+        return view('backend.quizs.add-answer',compact('question_id','question_name','question','question_id','quiz_id'));
     }
 
     // action remove answer

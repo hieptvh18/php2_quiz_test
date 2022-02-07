@@ -10,7 +10,7 @@
         </div>
         <div class="filter mb-4">
             <select name="filter_score" id="">
-                <option selected disable>Lọc theo điểm</option>
+                <option selecte disabled>Lọc theo điểm</option>
                 <option value="1">Cao -> thấp</option>
                 <option value="2">Thấp -> cao</option>
             </select>

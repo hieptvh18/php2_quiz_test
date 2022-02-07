@@ -57,6 +57,16 @@
                     @enderror
                 </div>
 
+              <div class="form-group">
+                <p>Vai trò</p>
+                <input type="radio" id="role1" value="1" class="fadeIn second" name="role_id">
+                <label for="role1" class="mr-2">Sinh viên</label>
+                <input type="radio" id="role2" value="2" class="fadeIn second" name="role_id">
+                <label for="role2">Giáo viên</label>
+              </div>
+                @error('name')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <input type="submit" name="btnRegister" class="fadeIn fourth" value="Đăng kí">
             </form>
 

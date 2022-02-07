@@ -12,16 +12,16 @@
         @if (session('fail'))
             <div class="alert alert-danger">{{ session('fail') }}</div>
         @endif
-        <a class="btn btn-info" href="{{redirect()->back()}}"><- Quay lại </a>
+        <a class="btn btn-info" href="{{route('admin.quiz.detail',['id'=>$quiz_id->id])}}"><- Quay lại </a>
         <div class="content d-flex justify-content-center">
             <form action="" method="POST" class="col-md-6 " enctype="multipart/form-data">
                 @csrf
                 <h3 class="m-3 text-center">Thêm câu trả lời cho câu hỏi '{{$question_name->name}}'</h3>
-                @if ($q->img)
+                @if ($question->img)
                     <img src="{{asset('uploads/'.$question->img)}}" width="80px" alt="">   
                 @endif
                 <div class="form-group">
-                    <label for="">Nội dung (éo bt nd j :)))</label>
+                    <label for="">Nội dung</label>
                     <textarea name="content" id="" cols="30" rows="2" class="form-control" placeholder="Nội dung câu trả lời">{{old('content')}}</textarea>
                     @error('content')
                         <div class="text-danger">{{ $message }}</div>

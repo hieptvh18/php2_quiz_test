@@ -57,6 +57,8 @@ class ExamController extends Controller
             $listQues = Question::select('questions.*')->where('quiz_id', $quiz_id)->get();
             $start_time = $rq->input('start_time');
             $end_time = Carbon::now()->toDateTimeString();
+            $arrQues = [];
+            $arrAns = [];
 
             // tính điểm mốc của mỗi câu hỏi trong quiz, cho thang điểm 10
             $minimumScore = 10 / $listQues->COUNT();
@@ -107,19 +109,32 @@ class ExamController extends Controller
             $student_quiz->save();
             
             // lưu vô student_quiz_detail
-            // $student_quiz_detail = new StudentQuizDetail;
-            // $student_quiz_detail->student_quiz_id = $student_quiz->id;
             
-            // for ($n = 1; $n <= count($dataRequest); $n++) {
+            for ($n = 1; $n <= count($dataRequest); $n++) {
+                // lặp ra các câu hỏi lưu vào mảng rỗng -> up vào table student_quiz_detail
+                if(isset($dataRequest['questions_id' . $n]) ){
+
+                    array_push($arrQues,$dataRequest['questions_id' . $n]);
+                }
+                if ( isset($dataRequest['answers' . $n])) {
+                    // lưu vô mảng 
+                    array_push($arrAns,$dataRequest['answers' . $n]);
+                }
+            }
+
+            $student_quiz_detail = new StudentQuizDetail;
+            // foreach($arrQues as $item){
+            //     $student_quiz_detail->student_quiz_id = $student_quiz->id;
+            //     $student_quiz_detail->question_id = $item;
                 
-            //     $student_quiz_detail->question_id = $dataRequest['questions_id' . $n];
-            //     // lặp ra các câu hỏi
-            //     if (isset($dataRequest['questions_id' . $n]) && isset($dataRequest['answers' . $n])) {
-            //         // lưu vô
-            //         $student_quiz_detail->answer_id = $dataRequest['answers' . $n];
+            //     foreach($arrAns as $i){
+            //         $student_quiz_detail->answer_id = $i;
+
             //     }
+
+            //     $student_quiz_detail->save();
             // }
-            // $student_quiz_detail->save();
+            
 
 
             return redirect(route('exam.result',['id'=>$quiz_id]))->with('msg','Đã hoàn thành bài quiz');

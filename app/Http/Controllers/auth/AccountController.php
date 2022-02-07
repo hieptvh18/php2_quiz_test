@@ -71,7 +71,8 @@ class AccountController extends Controller
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:5',
-                'avatar' => 'required'
+                'avatar' => 'required',
+                'role_id' => 'required'
             ]);
 
             // insert
@@ -80,13 +81,12 @@ class AccountController extends Controller
 
             // mã hóa password
             $model->password = Hash::make($rq->password);
-            $model->role_id = 1;
             $save = $model->save();
 
             if ($save) {
                 // upload img
                 $rq->file('avatar')->store('uploads');
-                return back()->with('message', 'Đăng kí tài khoản thành công!');
+                return redirect()->route('login')->with('message', 'Đăng kí tài khoản thành công!');
             } else {
                 return back()->with('message', 'Đăng kí thất bại! Vui lòng thử lại!');
             }

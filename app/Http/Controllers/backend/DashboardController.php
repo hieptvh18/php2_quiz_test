@@ -13,8 +13,7 @@ class DashboardController extends Controller
     public function index(Request $rq){
         // get data
         $idUser = $rq->session()->get('teacher');
-
-        $listCourse = Subject::all();     
+        $listCourse = Subject::where('author_id',$idUser->id)->get();     
 
         return view('backend.dashboard.index',compact('listCourse'));
     }
