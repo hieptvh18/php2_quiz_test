@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\DB;
 class QuizController extends Controller
 {
 
+    // manage
+    public function resultExam($id){
+        // get data
+        $quiz = Quiz::where('id',$id)->first();
+
+        return view('backend.exam.list-result',compact('quiz'));
+    }
+
     // list
     public function list(){
         // get data

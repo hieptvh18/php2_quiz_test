@@ -41,6 +41,7 @@
                             </td>
                             <td>
                                 <a href="{{route('admin.quiz.detail',['id'=>$item->id])}}" class="btn btn-info">Xem chi tiết -></a>
+                                <a href="{{route('admin.quiz.result',['id'=>$item->id])}}" class="btn btn-secondary">Quản lý</a>
                                 <a href="{{route('admin.quiz.edit',['id'=>$item->id])}}" class="btn btn-warning">Sửa</a>
                                 <a href="{{route('admin.quiz.remove',['id'=>$item->id])}}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn xóa quiz! Tất cả thông tin liên quan sẽ bị xóa cùng!')">Xóa</a>
                             </td>

@@ -30,7 +30,7 @@ Route::middleware(['AuthLogin:class'])->group(function(){
     Route::get('/',[HomeController::class,'index'])->name('client.home') ;
 
     // exam result
-    Route::get('exam/result',[ExamController::class,'examResult'])->name('exam.result');
+    Route::get('exam/result/{id}',[ExamController::class,'examResult'])->name('exam.result');
 
     
     // group route client
@@ -80,6 +80,9 @@ Route::middleware(['AuthLogin:class'])->group(function(){
 
             // list
             Route::any('/list',[QuizAdminController::class,'list'])->name('admin.quiz.list');
+
+            // manage
+            Route::any('/manage/{id}',[QuizAdminController::class,'resultExam'])->name('admin.quiz.result');
 
             // add
             Route::any('/create',[QuizAdminController::class,'create'])->name('admin.quiz.add');

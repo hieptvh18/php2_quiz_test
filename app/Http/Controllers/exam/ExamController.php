@@ -86,20 +86,27 @@ class ExamController extends Controller
                 }
             }
 
-            // // tính điểm * vs điểm mốc
-            // $total_point = $minimumScore * $true;
+            // tính điểm * vs điểm mốc
+            $total_point = $minimumScore * $true;
 
-            // // lưu thông tin vô student_quiz
-            // $student_quiz = new StudentQuiz;
-            // $student_quiz->student_id = $student_id;
-            // $student_quiz->quiz_id = $quiz_id;
-            // $student_quiz->start_time = $start_time;
-            // $student_quiz->end_time = $end_time;
-            // $student_quiz->score = $total_point;
+            // check xem ng này đã từng làm quiz này chưa, rồi thì xóa cái cũ lưu cái mới
+            $userExist = StudentQuiz::where('quiz_id',$quiz_id)
+                            ->where('student_id',$student_id)->first();
+            if($userExist){
+                StudentQuiz::destroy($userExist->id);   
+            }
 
-            // $student_quiz->save();
+            // lưu thông tin vô student_quiz
+            $student_quiz = new StudentQuiz;
+            $student_quiz->student_id = $student_id;
+            $student_quiz->quiz_id = $quiz_id;
+            $student_quiz->start_time = $start_time;
+            $student_quiz->end_time = $end_time;
+            $student_quiz->score = $total_point;
+
+            $student_quiz->save();
             
-            // // lưu vô student_quiz_detail
+            // lưu vô student_quiz_detail
             // $student_quiz_detail = new StudentQuizDetail;
             // $student_quiz_detail->student_quiz_id = $student_quiz->id;
             
@@ -115,14 +122,19 @@ class ExamController extends Controller
             // $student_quiz_detail->save();
 
 
-            return redirect(route('exam.result'))->with('msg','Đã hoàn thành bài quiz');
+            return redirect(route('exam.result',['id'=>$quiz_id]))->with('msg','Đã hoàn thành bài quiz');
         }
     }
 
     // màn hình kết quả
-    public function examResult(Request $rq){
+    public function examResult(Request $rq,$id){
 
-        return view('exam.exam-result');
+        // get data
+        $userId = session('student') ? session('student')->id : session('teacher')->id;
+        $result = StudentQuiz::where('student_id',$userId)->where('quiz_id',$id)->get();
+
+
+        return view('exam.exam-result',compact('result'));
     }
 
     // màn hình chi tiết kết quả

@@ -20,6 +20,7 @@
         <div class="alert alert-secondary">
             <span>{{$key+1}}.</span>
                 <a href="{{route('admin.quiz.detail',['id'=>$item->id])}}">{{$item->name}}</a>
+                <a href="{{route('admin.quiz.result',['id'=>$item->id])}}" class="btn btn-secondary">Quản lý</a>
                 <a href="{{route('admin.quiz.edit',['id'=>$item->id])}}" class="btn btn-warning">Sửa</a>
                 <a href="{{route('admin.quiz.remove',['id'=>$item->id])}}" onclick="return confirm('Bạn chắc chắn muốn xóa quiz! Tất cả thông tin liên quan cũng sẽ bị xóa!')" class=" ml-3 btn btn-danger">Xóa quiz</a>
         </div>
