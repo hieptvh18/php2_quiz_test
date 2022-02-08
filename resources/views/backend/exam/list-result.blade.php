@@ -22,11 +22,12 @@
                     <tr>
                         <th>STT</th>
                         <th>Tên</th>
+                        <th>Email</th>
                         <th>Điểm</th>
                         <th>Số câu đã làm</th>
                         <th>Số câu chính xác</th>
-                        <th>Thời gian bắt đầu làm</th>
-                        <th>Thời gian nộp bài</th>
+                        <th>Bắt đầu làm</th>
+                        <th>Nộp bài</th>
                         <th>Chức năng</th>
                     </tr>
                 </thead>
