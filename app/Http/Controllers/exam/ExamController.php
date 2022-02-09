@@ -109,6 +109,7 @@ class ExamController extends Controller
             $student_quiz->save();
             
             // lưu vô student_quiz_detail
+            // lưu đúng nếu user trả lời hết các câu hỏi
             
             for ($n = 1; $n <= count($dataRequest); $n++) {
                 // lặp ra các câu hỏi lưu vào mảng rỗng -> up vào table student_quiz_detail
@@ -121,20 +122,15 @@ class ExamController extends Controller
                     array_push($arrAns,$dataRequest['answers' . $n]);
                 }
             }
-
             $student_quiz_detail = new StudentQuizDetail;
-            // foreach($arrQues as $item){
-            //     $student_quiz_detail->student_quiz_id = $student_quiz->id;
-            //     $student_quiz_detail->question_id = $item;
+            foreach($arrQues as $key=>$item){
+                $student_quiz_detail->student_quiz_id = $student_quiz->id;
+                $student_quiz_detail->question_id = $item;
                 
-            //     foreach($arrAns as $i){
-            //         $student_quiz_detail->answer_id = $i;
+                    $student_quiz_detail->answer_id = $arrAns[$key];
 
-            //     }
-
-            //     $student_quiz_detail->save();
-            // }
-            
+                }
+                $student_quiz_detail->save();
 
 
             return redirect(route('exam.result',['id'=>$quiz_id]))->with('msg','Đã hoàn thành bài quiz');
@@ -143,11 +139,9 @@ class ExamController extends Controller
 
     // màn hình kết quả
     public function examResult(Request $rq,$id){
-
         // get data
         $userId = session('student') ? session('student')->id : session('teacher')->id;
         $result = StudentQuiz::where('student_id',$userId)->where('quiz_id',$id)->get();
-
 
         return view('exam.exam-result',compact('result'));
     }
