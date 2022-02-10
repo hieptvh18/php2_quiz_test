@@ -35,22 +35,22 @@ class QuizController extends Controller
     }
 
     // nội dung quiz
-    public function detail($id){
-        // get data
-        $quizName = Quiz::select('name')->where('id','=',$id)->first();
+    // public function detail($id){
+    //     // get data
+    //     $quizName = Quiz::select('name')->where('id','=',$id)->first();
 
-        $quizId = $id;
-        $listQues = Question::select('questions.*')->where('quiz_id',$id)->get();
-        // danh sách câu hỏi + đáp án của quiz;
-        $contentQuiz = DB::table('quizs')
-                            ->select('questions.*','answers.*')
-                            ->join('questions','quizs.id','=','questions.quiz_id')
-                            ->join('answers','answers.question_id','=','questions.id')
-                            ->where('quizs.id',$id)->get();
+    //     $quizId = $id;
+    //     $listQues = Question::select('questions.*')->where('quiz_id',$id)->get();
+    //     // danh sách câu hỏi + đáp án của quiz;
+    //     $contentQuiz = DB::table('quizs')
+    //                         ->select('questions.*','answers.*')
+    //                         ->join('questions','quizs.id','=','questions.quiz_id')
+    //                         ->join('answers','answers.question_id','=','questions.id')
+    //                         ->where('quizs.id',$id)->get();
 
-        return view('backend.quizs.quiz-detail',compact('contentQuiz','quizName','quizId','listQues', ));
+    //     return view('backend.quizs.quiz-detail',compact('contentQuiz','quizName','quizId','listQues', ));
 
-    }
+    // }
 
     //add quiz
     public function create(Request $rq){
@@ -70,7 +70,7 @@ class QuizController extends Controller
             $save = $quizModel->save();
 
             if($save){
-                return back()->with('msg','Thêm thành công 1 quiz mới!');
+                return redirect(route('admin.quiz.edit',['id'=>$quizModel->id]))->with('msg','Thêm thành công 1 quiz mới!');
             }
             return back()->with('fail','Thêm thất bại, vui lòng thử lại!');
         }
@@ -83,7 +83,9 @@ class QuizController extends Controller
     {
         // get dtaaa
         $myQuiz = Quiz::find($id);
+        $quizId  = $id;
         $listSubject = Subject::all();
+        $listQues = Question::select('questions.*')->where('quiz_id',$id)->get();
 
         if($rq->isMethod('post')){
 
@@ -105,7 +107,7 @@ class QuizController extends Controller
             return back()->with('fail','Sửa thất bại, vui lòng thử lại!');
         }
 
-        return view('backend.quizs.edit',compact('myQuiz','listSubject'));
+        return view('backend.quizs.edit',compact('myQuiz','listSubject','listQues','quizId'));
     }
 
     // remove

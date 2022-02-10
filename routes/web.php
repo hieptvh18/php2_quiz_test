@@ -31,7 +31,10 @@ Route::middleware(['AuthLogin:class'])->group(function(){
 
     // exam result
     Route::get('exam/result/{id}',[ExamController::class,'examResult'])->name('exam.result');
-
+    
+    // list test done
+    Route::get('exam/history',[ExamController::class,'examDone'])->name('exam.history');
+    
     
     // group route client
     Route::prefix('join')->group(function(){

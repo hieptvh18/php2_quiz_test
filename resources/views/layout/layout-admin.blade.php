@@ -19,10 +19,7 @@
                 <a href="{{route('admin.quiz.list')}}" class="nav-link">
                     2. Danh sách quizs
                  </a>
-
-                 <a href="" class="nav-link">
-                    3. Danh Câu hỏi
-                 </a>
+                
             </div>
             <!-- main -->
             @yield('main')

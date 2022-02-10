@@ -150,4 +150,17 @@ class ExamController extends Controller
     public function examDetail(){
         
     }
+
+    // màn hình lịch sử bài quiz đã làm
+    public function examDone(){
+        // get data
+        $userId = session('student') ? session('student')->id : session('teacher')->id;
+        $testDone = StudentQuiz::select('student_quizs.start_time as exam_date','student_quizs.score','quizs.*')
+                        // ->join('student_quiz_detail','student_quiz_detail.student_quiz_id','student_quizs.id')
+                        ->join('quizs','quizs.id','student_quizs.quiz_id')
+                        ->orderBy('student_quizs.id','desc')
+                        ->where('student_quizs.student_id',$userId)->get();
+
+        return view('exam.exam-history',compact('testDone'));
+    }
 }

@@ -12,7 +12,7 @@
         @if (session('fail'))
             <div class="alert alert-danger">{{ session('fail') }}</div>
         @endif
-        <a class="btn btn-info" href="{{route('admin.quiz.detail',['id'=>$quiz_id->id])}}"><- Quay lại </a>
+        <a class="btn btn-info" href="{{route('admin.quiz.edit',['id'=>$quiz_id])}}"><- Quay lại </a>
         <div class="content d-flex justify-content-center">
             <form action="" method="POST" class="col-md-6 " enctype="multipart/form-data">
                 @csrf

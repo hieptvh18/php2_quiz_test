@@ -13,7 +13,7 @@
         @if (session('fail'))
             <div class="alert alert-danger">{{ session('fail') }}</div>
         @endif
-        <a class="btn btn-info" href="{{redirect()->    back()}}"><- Quay lại </a>
+        <a class="btn btn-info" href="{{route('admin.quiz.edit',['id'=>$quizId])}}"><- Quay lại </a>
         <div class="content d-flex justify-content-center">
             <form action="" method="POST" class="col-md-6 " enctype="multipart/form-data">
                 <h3 class="m-3 text-center">Thêm câu hỏi </h3>
