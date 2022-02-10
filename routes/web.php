@@ -100,15 +100,18 @@ Route::middleware(['AuthLogin:class'])->group(function(){
             Route::get('/quiz-detail/{id?}',[QuizAdminController::class,'detail'])->name('admin.quiz.detail');
 
             // add quuestion
-            Route::any('/add-question/{id}',[QuestionController::class,'addQuestion'])->name('admin.quiz.add-question');
+            // Route::any('/add-question/{id}',[QuestionController::class,'addQuestion'])->name('admin.quiz.add-question');
+
+            // add question & answers
+            Route::any('add-question/{id}',[QuestionController::class,'addQuestion'])->name('admin.quiz.add-question');
 
             // remove quuestion
             Route::any('/remove-question/{id}',[QuestionController::class,'removeQuestion'])->name('admin.quiz.remove-question');
 
              // add answer
-             Route::any('/add-answer/{id}',[AnswerController::class,'addAnswer'])->name('admin.quiz.add-answer');
+            //  Route::any('/add-answer/{id}',[AnswerController::class,'addAnswer'])->name('admin.quiz.add-answer');
              
-              // add answer
+              // remove answer
               Route::any('/remove-answer/{id}',[AnswerController::class,'removeAnswer'])->name('admin.quiz.remove-answer');
 
         });
@@ -124,3 +127,7 @@ Route::middleware(['AuthLogin:class'])->group(function(){
 });
 
 
+
+// Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

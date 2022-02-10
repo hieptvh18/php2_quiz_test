@@ -43,6 +43,7 @@
                     <a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a>
                 </div>
             </div>
+            
         @else
             <div class="register">
                 <a href="{{ route('login') }}" class="btn btn-warning">Đăng nhập</a>
