@@ -14,42 +14,12 @@ class QuestionController extends Controller
     // thêm câu hỏi
     public function addQuestion(Request $rq, $id)
     {
-        // get data
-        // $quizName = Quiz::select('name')->where('id',$id)->first();
-        // $quizId = $id;
-
-        // if($rq->isMethod('post')){
-        //     $rq->validate([
-        //         'name'=>'required|min:3|max:300|unique:questions',
-        //     ]);
-
-        //     $ques = new Question();
-        //     $ques->fill($rq->all());
-
-        //     // ko bắt buộc câu hỏi p có img
-        //     if($rq->file('img')){
-        //         $fileName = uniqid() . '-question' . time() . '.' . $rq->img->extension();
-        //         $rq->file('img')->move(public_path('uploads'), $fileName);
-        //         $ques->img = $fileName;
-        //    }
-
-        //     $save = $ques->save();
-
-        //     if($save){
-        //         return redirect()->route('admin.quiz.add-answer',['id'=>$ques->id]);
-        //     }else{
-        //         return back()->with('fail','Thêm thất bại, vui lòng thử lại sau!');
-        //     }
-
-        // }
-
-        // return view('backend.quizs.add-question',compact('quizName','quizId'));
-            dd($rq->all());
+        // dd($rq->all());
 
         // lưu câu hỏi
         $ques = new Question();
         $ques->fill($rq->all());
-        $ques->quiz_id = $id;    
+        $ques->quiz_id = $id;
 
         // ko bắt buộc câu hỏi p có img
         if ($rq->file('img')) {
@@ -57,20 +27,24 @@ class QuestionController extends Controller
             $rq->file('img')->move(public_path('uploads'), $fileName);
             $ques->img = $fileName;
         }
-         $ques->save();
+        $ques->save();
 
         // lưu answer
-        $ans = new Answer();
-        foreach($rq->input('answer') as $item){
-            $ans->content = $item; 
+        foreach ($rq->input('answer') as $key => $item) {
+            $ans = new Answer();
+            $ans->content = $item;
             $ans->question_id = $ques->id;
             // check is_correct
-            
+            if($key == $rq->input('is_correct')){
+                $ans->is_correct = 1;
+            }else{
+                $ans->is_correct = 0;
+            }
             $ans->save();
         }
 
 
-        return redirect(route('admin.quiz.edit',['id'=>$id]))->with('msg','Thêm thành công 1 câu hỏi!');
+        return redirect(route('admin.quiz.edit', ['id' => $id]))->with('msg', 'Thêm thành công 1 câu hỏi!');
     }
 
 

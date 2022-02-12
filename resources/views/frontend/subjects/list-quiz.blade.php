@@ -28,8 +28,8 @@
                                     href="{{ route('client.quiz.exam', ['id' => $item->id]) }}"
                                     onclick="return confirm('Bắt đầu vào làm quiz?')">Băt đầu làm</a></span>
                         @else
-                            <div class="">{{ $item->name }} <span class="text-danger ml-3">Đã hết hạn làm
-                                    bài!</span></div>
+                            <span class="">{{ $item->name }} <span class="text-danger ml-3">Đã hết hạn làm
+                                    bài!</span></span>
                         @endif
 
                         <a href="{{ route('admin.quiz.remove', ['id' => $item->id]) }}"

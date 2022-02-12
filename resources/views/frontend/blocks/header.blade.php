@@ -28,7 +28,7 @@
                     Cá nhân
                 </button>
                 <div class="dropdown-menu">
-                    {{-- <a class="dropdown-item" href="#">Hồ sơ</a> --}}
+                    <a class="dropdown-item" href="{{route('exam.history')}}">Lịch sử</a>
                     <a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a>
                 </div>
             </div>

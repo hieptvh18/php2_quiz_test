@@ -15,10 +15,16 @@ class QuizController extends Controller
 {
 
     // manage
+    //Tên	Email	Điểm	Số câu đã làm	Số câu chính xác	Bắt đầu làm	Nộp bài
     public function resultExam($id){
         // get data
         $quiz = Quiz::where('id',$id)->first();
-
+        $quizs = Quiz::select('users.name as fullname','users.email','student_quizs.score','student_quizs.start_time','student_quizs.end_time','quizs.name')
+                ->join('student_quizs','student_quizs.quiz_id','quizs.id')
+                ->join('users','users.id','student_quizs.student_id')
+                ->join('student_quiz_detail','student_quiz_detail.student_quiz_id','student_quizs.id')
+                ->where('quizs.id',$id)->get();
+        dd($quizs);
         return view('backend.exam.list-result',compact('quiz'));
     }
 
@@ -34,23 +40,6 @@ class QuizController extends Controller
         return view('backend.quizs.list-quiz',compact('listQuiz'));
     }
 
-    // nội dung quiz
-    // public function detail($id){
-    //     // get data
-    //     $quizName = Quiz::select('name')->where('id','=',$id)->first();
-
-    //     $quizId = $id;
-    //     $listQues = Question::select('questions.*')->where('quiz_id',$id)->get();
-    //     // danh sách câu hỏi + đáp án của quiz;
-    //     $contentQuiz = DB::table('quizs')
-    //                         ->select('questions.*','answers.*')
-    //                         ->join('questions','quizs.id','=','questions.quiz_id')
-    //                         ->join('answers','answers.question_id','=','questions.id')
-    //                         ->where('quizs.id',$id)->get();
-
-    //     return view('backend.quizs.quiz-detail',compact('contentQuiz','quizName','quizId','listQues', ));
-
-    // }
 
     //add quiz
     public function create(Request $rq){

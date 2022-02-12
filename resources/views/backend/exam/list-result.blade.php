@@ -10,7 +10,7 @@
         </div>
         <div class="filter mb-4">
             <select name="filter_score" id="">
-                <option selecte disabled>Lọc theo điểm</option>
+                <option selected disabled>Lọc theo điểm</option>
                 <option value="1">Cao -> thấp</option>
                 <option value="2">Thấp -> cao</option>
             </select>
@@ -24,7 +24,7 @@
                         <th>Tên</th>
                         <th>Email</th>
                         <th>Điểm</th>
-                        <th>Số câu đã làm</th>
+                        <th>Số câu hỏi</th>
                         <th>Số câu chính xác</th>
                         <th>Bắt đầu làm</th>
                         <th>Nộp bài</th>
@@ -32,7 +32,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                   
+                   <tr>
+                       <td></td>
+                   </tr>
                 </tbody>
             </table>
         </div>
@@ -40,6 +42,8 @@
 
     {{-- js --}}
     <script>
+        // filter
+
 
     </script>
 @endsection

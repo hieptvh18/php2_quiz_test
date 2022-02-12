@@ -131,11 +131,11 @@
                                         </div>
                                         <br>
                                         <div class="col-12">
-                                            <button type="button" id="add_answer" class="btn btn-sm btn-success">Thêm đáp án</button>
+                                            
                                             <table>
                                                 <thead>
-                                                    <th style="width: 88%;">Nội dung</th>
-                                                    <th>Đáp án đúng</th>
+                                                    <th style="width: 88%;">Thêm đáp án</th>
+                                                    {{-- <th>Đáp án đúng</th> --}}
                                                 </thead>
                                                 <tbody id="answer_list">
                                                     <tr>
@@ -144,8 +144,38 @@
                                                         </td>
                                                         <td>
                                                             <input class="form-control"
-                                                                onchange="correctAnswerChange(this)" name="" type="checkbox"
-                                                                value="1" id="status">
+                                                                onchange="correctAnswerChange(this)" name="is_correct" type="checkbox"
+                                                                value="0" checked id="status">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 88%;">
+                                                            <input type="text" class="form-control" name="answer[]" placeholder="Nhập câu trả lời ">
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control"
+                                                                onchange="correctAnswerChange(this)" name="is_correct" type="checkbox"
+                                                                value="1"  id="status">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 88%;">
+                                                            <input type="text" class="form-control" name="answer[]" placeholder="Nhập câu trả lời ">
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control"
+                                                                onchange="correctAnswerChange(this)" name="is_correct" type="checkbox"
+                                                                value="2"  id="status">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 88%;">
+                                                            <input type="text" class="form-control" name="answer[]" placeholder="Nhập câu trả lời ">
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control"
+                                                                onchange="correctAnswerChange(this)" name="is_correct" type="checkbox"
+                                                                value="3"  id="status">
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -157,7 +187,7 @@
                                     <div class="mt-3">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" id="btnSaveModel" class="btn btn-primary">Save changes</button>
+                                        <button type="submit" id="btnSaveModel" class="btn btn-primary">Lưu lại</button>
                                     </div>
                                 </form>
                             </div>
@@ -220,19 +250,19 @@
                 addQuestionModel.show();
             });
 
-            $('#add_answer').click(function() {
+            // $('#add_answer').click(function() {
 
-                $('tbody#answer_list').append(`
-                <tr>
-                    <td>
-                        <input type="text" placeholder="Nhập câu trả lời " class="form-control" name="answer[]">
-                    </td>
-                    <td>
-                        <input onchange="correctAnswerChange(this)" class="form-control" name="" type="checkbox">
-                    </td>
-                </tr>
-            `);
-            })
+            //     $('tbody#answer_list').append(`
+            //     <tr>
+            //         <td>
+            //             <input type="text" placeholder="Nhập câu trả lời " class="form-control" name="answer[]">
+            //         </td>
+            //         <td>
+            //             <input onchange="correctAnswerChange(this)" class="form-control" name="is_correct" value="${index()}" type="checkbox">
+            //         </td>
+            //     </tr>
+            // `);
+            // })
 
             function correctAnswerChange(el) {
                 $('tbody#answer_list').find('input[type="checkbox"]').prop('checked', false);

@@ -3,7 +3,7 @@
 @section('main')
     <main class="col-md-9">
         <div class="hello">
-            <h4 class="text-center mt-3">Welcome thầy {{session('teacher')->name}} đẹp troai đến với trang quản trị Quiz test</h4>
+            <h4 class="text-center mt-3">Welcome thầy {{session('teacher')->name}} đến với trang quản trị Quiz test</h4>
             <h5 class="text-center text-primary m-4"><i class="fa fa-list mr-2" aria-hidden="true"></i>
                  Danh sách bộ môn của bạn</h5>
         </div>

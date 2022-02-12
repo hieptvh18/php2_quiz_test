@@ -6,13 +6,13 @@
     <main>
         <h4 class="m-4 text-center">Kết quả bài quiz</h4>
         {{-- <p>{{$}}</p> --}}
-        @foreach($result as $item)
+        <h4 class="text-center">Điểm số bài quiz: {{$result->score}}/10</h4>
 
-        <h4 class="text-center">Điểm số bài quiz: {{$item->score}}</h4>
-        <p>Thời gian bắt đầu làm: {{$item->start_time}}</p>
-        <p>Thời gian nộp bài: {{$item->end_time}}</p>
-        <p>Số câu chính xác: ...</p>
-        @endforeach
+        <p>Thời gian bắt đầu làm: {{$result->start_time}}</p>
+        <p>Thời gian nộp bài: {{$result->end_time}}</p>
+        <p>Tổng câu hỏi: {{$totalQues->countQues}}</p>
+        <p>Số câu đúng: {{$true}}</p>
+        <p>Số câu sai: {{$false}}</p>
         
     </main>
 

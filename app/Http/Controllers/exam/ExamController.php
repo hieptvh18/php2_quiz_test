@@ -75,9 +75,8 @@ class ExamController extends Controller
                     // tìm answer true của từng câu hỏi
                     $answer_true = Question::select('answers.id')
                         ->join('answers', 'answers.question_id', 'questions.id')
-                        ->where('answers.is_correct',1)
-                        ->where('questions.id',$dataRequest['questions_id'.$n])->first();
-
+                        ->where('answers.is_correct', 1)
+                        ->where('questions.id', $dataRequest['questions_id' . $n])->first();
                     // check true fasle
                     if ($answer_true->id == $dataRequest['answers' . $n]) {
                         // true
@@ -92,10 +91,14 @@ class ExamController extends Controller
             $total_point = $minimumScore * $true;
 
             // check xem ng này đã từng làm quiz này chưa, rồi thì xóa cái cũ lưu cái mới
-            $userExist = StudentQuiz::where('quiz_id',$quiz_id)
-                            ->where('student_id',$student_id)->first();
-            if($userExist){
-                StudentQuiz::destroy($userExist->id);   
+            $userExist = StudentQuiz::where('quiz_id', $quiz_id)
+                ->where('student_id', $student_id)->first();
+            if ($userExist) {
+                StudentQuiz::destroy($userExist->id);
+                $list_std_quiz_detail = StudentQuizDetail::where('student_quiz_id', $userExist->id)->get();
+                foreach ($list_std_quiz_detail as $item) {
+                    DB::delete('delete from student_quiz_detail where student_quiz_id = ?', [$item->student_quiz_id]);
+                }
             }
 
             // lưu thông tin vô student_quiz
@@ -104,63 +107,93 @@ class ExamController extends Controller
             $student_quiz->quiz_id = $quiz_id;
             $student_quiz->start_time = $start_time;
             $student_quiz->end_time = $end_time;
-            $student_quiz->score = $total_point;
+            $student_quiz->score = number_format($total_point, 2);
 
             $student_quiz->save();
-            
+
             // lưu vô student_quiz_detail
             // lưu đúng nếu user trả lời hết các câu hỏi
-            
+
             for ($n = 1; $n <= count($dataRequest); $n++) {
                 // lặp ra các câu hỏi lưu vào mảng rỗng -> up vào table student_quiz_detail
-                if(isset($dataRequest['questions_id' . $n]) ){
+                if (isset($dataRequest['questions_id' . $n])) {
 
-                    array_push($arrQues,$dataRequest['questions_id' . $n]);
+                    array_push($arrQues, $dataRequest['questions_id' . $n]);
                 }
-                if ( isset($dataRequest['answers' . $n])) {
+                if (isset($dataRequest['answers' . $n])) {
                     // lưu vô mảng 
-                    array_push($arrAns,$dataRequest['answers' . $n]);
+                    array_push($arrAns, $dataRequest['answers' . $n]);
                 }
             }
-            $student_quiz_detail = new StudentQuizDetail;
-            foreach($arrQues as $key=>$item){
+
+            foreach ($arrQues as $key => $item) {
+                $student_quiz_detail = new StudentQuizDetail;
                 $student_quiz_detail->student_quiz_id = $student_quiz->id;
                 $student_quiz_detail->question_id = $item;
-                
-                    $student_quiz_detail->answer_id = $arrAns[$key];
 
-                }
+                $student_quiz_detail->answer_id = $arrAns[$key];
+
                 $student_quiz_detail->save();
+            }
 
 
-            return redirect(route('exam.result',['id'=>$quiz_id]))->with('msg','Đã hoàn thành bài quiz');
+            return redirect(route('exam.result', ['id' => $quiz_id]))->with('msg', 'Đã hoàn thành bài quiz');
         }
     }
 
     // màn hình kết quả
-    public function examResult(Request $rq,$id){
+    public function examResult(Request $rq, $id)
+    {
         // get data
         $userId = session('student') ? session('student')->id : session('teacher')->id;
-        $result = StudentQuiz::where('student_id',$userId)->where('quiz_id',$id)->get();
+        $result = StudentQuiz::select('student_quizs.*', 'student_quiz_detail.*')
+            ->join('student_quiz_detail', 'student_quiz_detail.student_quiz_id', 'student_quizs.id')
+            ->where('student_quizs.student_id', $userId)
+            ->where('student_quizs.quiz_id', $id)->first();
+        // tìm số câu đúng, số câu làm sai =))
+        $totalQues = StudentQuizDetail::select(DB::raw('count(student_quiz_detail.question_id) as countQues'))
+            ->join('student_quizs', 'student_quiz_detail.student_quiz_id', 'student_quizs.id')
+            ->where('student_quizs.student_id', $userId)
+            ->where('student_quizs.quiz_id', $id)->first();
 
-        return view('exam.exam-result',compact('result'));
+        $listAns = StudentQuizDetail::select('student_quiz_detail.answer_id')
+            ->join('student_quizs', 'student_quiz_detail.student_quiz_id', 'student_quizs.id')
+            ->where('student_quizs.student_id', $userId)
+            ->where('student_quizs.quiz_id', $id)->get();
+
+        // dd($listAns);
+        $true = 0;
+        $false = 0;
+        foreach ($listAns as $val) {
+            $ans = StudentQuizDetail::select('answers.is_correct')
+                ->join('answers', 'answers.id', 'student_quiz_detail.answer_id')
+                ->where('student_quiz_detail.answer_id', $val->answer_id)->first();
+            if ($ans->is_correct == 1) {
+                $true++;
+            } else {
+                $false++;
+            }
+        }
+
+        return view('exam.exam-result', compact('result','true','false','totalQues'));
     }
 
     // màn hình chi tiết kết quả
-    public function examDetail(){
-        
+    public function examDetail()
+    {
     }
 
     // màn hình lịch sử bài quiz đã làm
-    public function examDone(){
+    public function examDone()
+    {
         // get data
         $userId = session('student') ? session('student')->id : session('teacher')->id;
-        $testDone = StudentQuiz::select('student_quizs.start_time as exam_date','student_quizs.score','quizs.*')
-                        // ->join('student_quiz_detail','student_quiz_detail.student_quiz_id','student_quizs.id')
-                        ->join('quizs','quizs.id','student_quizs.quiz_id')
-                        ->orderBy('student_quizs.id','desc')
-                        ->where('student_quizs.student_id',$userId)->get();
+        $testDone = StudentQuiz::select('student_quizs.start_time as exam_date', 'student_quizs.score', 'quizs.*')
+            // ->join('student_quiz_detail','student_quiz_detail.student_quiz_id','student_quizs.id')
+            ->join('quizs', 'quizs.id', 'student_quizs.quiz_id')
+            ->orderBy('student_quizs.id', 'desc')
+            ->where('student_quizs.student_id', $userId)->get();
 
-        return view('exam.exam-history',compact('testDone'));
+        return view('exam.exam-history', compact('testDone'));
     }
 }
