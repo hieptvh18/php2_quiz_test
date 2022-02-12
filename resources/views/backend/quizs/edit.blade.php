@@ -250,20 +250,6 @@
                 addQuestionModel.show();
             });
 
-            // $('#add_answer').click(function() {
-
-            //     $('tbody#answer_list').append(`
-            //     <tr>
-            //         <td>
-            //             <input type="text" placeholder="Nhập câu trả lời " class="form-control" name="answer[]">
-            //         </td>
-            //         <td>
-            //             <input onchange="correctAnswerChange(this)" class="form-control" name="is_correct" value="${index()}" type="checkbox">
-            //         </td>
-            //     </tr>
-            // `);
-            // })
-
             function correctAnswerChange(el) {
                 $('tbody#answer_list').find('input[type="checkbox"]').prop('checked', false);
                 $(el).prop('checked', true);

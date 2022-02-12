@@ -9,23 +9,22 @@ use App\Models\Subject;
 use App\Models\Quiz;
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\StudentQuiz;
 use Illuminate\Support\Facades\DB;
 
 class QuizController extends Controller
 {
 
     // manage
-    //Tên	Email	Điểm	Số câu đã làm	Số câu chính xác	Bắt đầu làm	Nộp bài
     public function resultExam($id){
         // get data
-        $quiz = Quiz::where('id',$id)->first();
-        $quizs = Quiz::select('users.name as fullname','users.email','student_quizs.score','student_quizs.start_time','student_quizs.end_time','quizs.name')
-                ->join('student_quizs','student_quizs.quiz_id','quizs.id')
+        $quizName = Quiz::where('id',$id)->first();
+        $quizs = StudentQuiz::select('users.name as fullname','users.email','student_quizs.score','student_quizs.start_time as start_time_exam','student_quizs.end_time as end_time_exam','quizs.name')
+                ->join('quizs','student_quizs.quiz_id','quizs.id')
                 ->join('users','users.id','student_quizs.student_id')
                 ->join('student_quiz_detail','student_quiz_detail.student_quiz_id','student_quizs.id')
-                ->where('quizs.id',$id)->get();
-        dd($quizs);
-        return view('backend.exam.list-result',compact('quiz'));
+                ->where('student_quizs.quiz_id',$id)->distinct()->get();
+        return view('backend.exam.list-result',compact('quizName','quizs'));
     }
 
     // list
