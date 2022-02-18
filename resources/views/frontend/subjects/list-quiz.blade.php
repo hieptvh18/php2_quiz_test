@@ -6,7 +6,7 @@
     <main>
         <div class="title mt-4 mb-3">
             @if ($myQuiz)
-                <h4>Danh sách bộ quiz của {{ $quizTitle->name }}</h4>
+                <h4>Danh sách quiz môn {{ $quizTitle->name }}</h4>
             @endif
 
         </div>

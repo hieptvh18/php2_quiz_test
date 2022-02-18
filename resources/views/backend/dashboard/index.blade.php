@@ -35,8 +35,11 @@
                             <td><img src="{{asset('uploads/'.$item->avatar)}}" width="60px" alt=""></td>
                             <td>
                                 <a href="{{route('admin.subject.list-quiz',['id'=>$item->id])}}" class="btn btn-info">Bài quiz-></a>
-                                <a href="{{route('admin.subject.edit',['id'=>$item->id])}}" class="btn btn-warning">Sửa</a>
-                                <a href="{{route('admin.subject.del',['id'=>$item->id])}}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn xóa Môn học? Tất cả bài quiz của môn cũng sẽ mất!')">Xóa</a>
+                                <a href="{{route('admin.subject.edit',['id'=>$item->id])}}" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+
+                                </a>
+                                <a href="{{route('admin.subject.del',['id'=>$item->id])}}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn xóa Môn học? Tất cả bài quiz của môn cũng sẽ mất!')"><i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
                             </td>
                         </tr>
                         @php

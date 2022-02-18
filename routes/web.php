@@ -15,7 +15,6 @@ use  App\Http\Controllers\backend\QuestionController;
 use  App\Http\Controllers\backend\AnswerController;
 
 // ajax
-use App\Http\Controllers\handle\AjaxController;
 
 // ==========login & register=========
 Route::any('/register',[AccountController::class,'register'])->name('register');
@@ -123,7 +122,8 @@ Route::middleware(['AuthLogin:class'])->group(function(){
     });
 
     // ============================route handle ajax==============
-    Route::post('ajax/previewImg',[AjaxController::class,'previewImg'])->name('ajax.previewImg');
+   
+    // Route::post('ajax/previewImg',[AjaxController::class,'previewImg'])->name('ajax.previewImg');
 });
 
 

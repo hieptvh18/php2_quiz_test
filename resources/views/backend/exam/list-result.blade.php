@@ -26,7 +26,7 @@
                         <th>Nộp bài</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="renderQuizResult">
                     @foreach ($quizs as $key => $val)
                         <tr>
                             <td>{{ $key + 1 }}</td>
@@ -44,4 +44,46 @@
     </main>
 
 
+@endsection
+@section('page-script')
+    <script>
+        $(document).ready(function() {
+            function filter_ajax() {
+                $('#filter_score').change(function() {
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: '{{ route('ajax.filter_score') }}',
+                        type: 'POST',
+                        data: {
+                            filter_option: $('#filter_score').val(),
+                            quiz_id:{{$quizName->id}} ,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(data) {
+                            console.log(data)
+                            // lặp data + inner ra màn hình
+                            var htmls = '';
+                            data.forEach(function(val,index){
+                                htmls += `
+                                    <tr>
+                                        <td>${index+1}</td>    
+                                        <td>${val.fullname}</td>    
+                                        <td>${val.email}</td>    
+                                        <td>${val.score}</td>    
+                                        <td>${val.start_time_exam}</td>    
+                                        <td>${val.end_time_exam}</td>    
+                                    </tr>
+                                `;
+                            })
+                            $('#renderQuizResult').html(htmls);
+                        }
+                    });
+                });
+            }
+            filter_ajax();
+        });
+    </script>
 @endsection

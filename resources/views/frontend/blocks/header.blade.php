@@ -16,7 +16,7 @@
     </div>
     <div class="nav-menu ">
         <a href="{{ route('client.home') }}" class="mr-3">Trang chủ</a>
-        <a href="" class="mr-3">Các lớp học</a>
+        {{-- <a href="" class="mr-3">Các lớp học</a> --}}
         @if(Session::get('teacher'))
             <a href="{{ route('admin.dashboard') }}" class="mr-3">Quản trị</a>
         @endif

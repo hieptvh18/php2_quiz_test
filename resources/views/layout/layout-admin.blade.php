@@ -29,6 +29,8 @@
 
     <!-- js -->
         @include('frontend.blocks.script')
+
+        @yield('page-script')
 </body>
 
 </html>

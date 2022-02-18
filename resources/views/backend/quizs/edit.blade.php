@@ -220,6 +220,11 @@
                                         class="ml-4">
                                         <i class="fa fa-trash-o text-danger" aria-hidden="true"></i>
                                     </a>
+                                    @if ($a->is_correct == 1)
+                                        
+                                        {{-- check đáp án đúng --}}
+                                        <span class="ml-4 bg-success text-light">Đáp án đúng</span>
+                                    @endif
                                 </p>
                             @endforeach
                         </div>

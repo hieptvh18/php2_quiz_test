@@ -10,10 +10,7 @@
         </div>
 
         <div class="content-quiz bg-light mb-4">
-            @if (session('teacher'))
-                <a href="{{ route('admin.quiz.add-question', ['id' => $quizId]) }}" class="btn btn-secondary">Thêm bộ câu
-                    hỏi +</a>
-            @endif
+         
             <div class="duration text-center mb-2">
                 <div class=" text-danger">Thời gian làm bài: {{ $quiz->duration_minutes }} phút</div>
                 <h6 class="mr-2">Thời gian còn lại:</h6>
