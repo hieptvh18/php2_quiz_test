@@ -70,19 +70,24 @@ class ExamController extends Controller
             for ($n = 1; $n <= count($dataRequest); $n++) {
 
                 // lặp ra các câu hỏi
-                if (isset($dataRequest['questions_id' . $n]) && isset($dataRequest['answers' . $n])) {
+                if (isset($dataRequest['questions_id' . $n]) ) {
 
-                    // tìm answer true của từng câu hỏi
-                    $answer_true = Question::select('answers.id')
-                        ->join('answers', 'answers.question_id', 'questions.id')
-                        ->where('answers.is_correct', 1)
-                        ->where('questions.id', $dataRequest['questions_id' . $n])->first();
-                    // check true fasle
-                    if ($answer_true->id == $dataRequest['answers' . $n]) {
-                        // true
-                        $true++;
-                    } else {
-                        $false++;
+                    if( isset($dataRequest['answers' . $n])){
+                            // tìm answer true của từng câu hỏi
+                            $answer_true = Question::select('answers.id')
+                                ->join('answers', 'answers.question_id', 'questions.id')
+                                ->where('answers.is_correct', 1)
+                                ->where('questions.id', $dataRequest['questions_id' . $n])->first();
+                            // check true fasle
+                            if ($answer_true->id == $dataRequest['answers' . $n]) {
+                                // true
+                                $true++;
+                            } else {
+                                $false++;
+                            }
+                    }else{
+                        $dataRequest['answers' . $n] = '';
+                        $false ++;
                     }
                 }
             }
@@ -125,13 +130,19 @@ class ExamController extends Controller
                     array_push($arrAns, $dataRequest['answers' . $n]);
                 }
             }
+            // dd($arrAns);
 
             foreach ($arrQues as $key => $item) {
                 $student_quiz_detail = new StudentQuizDetail;
                 $student_quiz_detail->student_quiz_id = $student_quiz->id;
                 $student_quiz_detail->question_id = $item;
 
-                $student_quiz_detail->answer_id = $arrAns[$key];
+                // check nếu câu hỏi méo dc trả lời
+                if($arrAns == ''){
+                    $student_quiz_detail->answer_id = 0;
+                }else{
+                    $student_quiz_detail->answer_id = $arrAns[$key];
+                }
 
                 $student_quiz_detail->save();
             }
@@ -150,32 +161,46 @@ class ExamController extends Controller
             ->join('student_quiz_detail', 'student_quiz_detail.student_quiz_id', 'student_quizs.id')
             ->where('student_quizs.student_id', $userId)
             ->where('student_quizs.quiz_id', $id)->first();
-        // tìm số câu đúng, số câu làm sai =))
-        $totalQues = StudentQuizDetail::select(DB::raw('count(student_quiz_detail.question_id) as countQues'))
+
+            $totalQues = StudentQuizDetail::select(DB::raw('count(student_quiz_detail.question_id) as countQues'))
             ->join('student_quizs', 'student_quiz_detail.student_quiz_id', 'student_quizs.id')
             ->where('student_quizs.student_id', $userId)
             ->where('student_quizs.quiz_id', $id)->first();
-
-        $listAns = StudentQuizDetail::select('student_quiz_detail.answer_id')
+            
+            $listAns = StudentQuizDetail::select('student_quiz_detail.answer_id')
             ->join('student_quizs', 'student_quiz_detail.student_quiz_id', 'student_quizs.id')
             ->where('student_quizs.student_id', $userId)
             ->where('student_quizs.quiz_id', $id)->get();
-
-        // dd($listAns);
+            
+            // dd($listAns);
+            // tìm số câu đúng, số câu làm sai =))
         $true = 0;
         $false = 0;
         foreach ($listAns as $val) {
-            $ans = StudentQuizDetail::select('answers.is_correct')
-                ->join('answers', 'answers.id', 'student_quiz_detail.answer_id')
-                ->where('student_quiz_detail.answer_id', $val->answer_id)->first();
-            if ($ans->is_correct == 1) {
-                $true++;
-            } else {
-                $false++;
+            // check ans null
+            if($val->answer_id != 0){
+
+                $ans = StudentQuizDetail::select('answers.is_correct')
+                    ->join('answers', 'answers.id', 'student_quiz_detail.answer_id')
+                    ->where('student_quiz_detail.answer_id', $val->answer_id)->first();
+                if ($ans->is_correct == 1) {
+                    $true++;
+                } else {
+                    $false++;
+                }
             }
         }
+        // số câu đã làm;
+        $countAnswered = StudentQuizDetail::select(DB::raw('count(question_id) as countAnswered')) ->join('student_quizs', 'student_quiz_detail.student_quiz_id', 'student_quizs.id')
+        ->where('student_quizs.student_id', $userId)
+        ->where('student_quiz_detail.answer_id', '!=',0)
+        ->where('student_quizs.quiz_id', $id)->first();
+        
+        $countAnswered = $countAnswered->countAnswered;
+        // chưa làm
+        $countNotAnswered = $totalQues->countQues - $countAnswered;
 
-        return view('exam.exam-result', compact('result','true','false','totalQues'));
+        return view('exam.exam-result', compact('result','true','false','totalQues','countAnswered','countNotAnswered'));
     }
 
     // màn hình chi tiết kết quả

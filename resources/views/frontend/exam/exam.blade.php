@@ -24,7 +24,7 @@
                 {{-- lặp toàn bộ câu hỏi, lồng bên trong là đáp án ok --}}
                 @foreach ($listQues as $key => $q)
 
-                    {{-- gán id của từng câu hỏi --}}
+                    {{-- gán name của từng câu hỏi --}}
                     <input type="hidden" name="questions_id{{ $key + 1 }}" value="{{ $q->id }}">
 
                     <div class="item  p-3 mb-3">

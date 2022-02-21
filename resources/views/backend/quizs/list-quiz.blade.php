@@ -19,6 +19,7 @@
                         <th>Thời gian</th>
                         <th>Ngày hiệu lực</th>
                         <th>Ngày hết hạn</th>
+                        <th>Điểm trung bình</th>
                         <th>Tình trạng</th>
                         <th>Chức năng</th>
                     </tr>
@@ -32,6 +33,7 @@
                             <td>{{$item->duration_minutes}}'</td>
                             <td>{{$item->start_time}}</td>
                             <td>{{$item->end_time}}</td>
+                            <td></td>
                             <td>
                                 @if ($item->status == 1)
                                     <span class="bg-success text-light p-2">Hiện</span>

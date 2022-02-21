@@ -8,11 +8,14 @@
         {{-- <p>{{$}}</p> --}}
         <h4 class="text-center">Điểm số bài quiz: {{$result->score}}/10</h4>
 
-        <p>Thời gian bắt đầu làm: {{$result->start_time}}</p>
-        <p>Thời gian nộp bài: {{$result->end_time}}</p>
-        <p>Tổng câu hỏi: {{$totalQues->countQues}}</p>
+        <h6>Thời gian bắt đầu làm: {{$result->start_time}}</h6>
+        <h6>Thời gian nộp bài: {{$result->end_time}}</h6>
+        <hr>
+        <h6>Tổng câu hỏi: {{$totalQues->countQues}}</h6>
         <p>Số câu đúng: {{$true}}</p>
         <p>Số câu sai: {{$false}}</p>
+            <p>Số đã làm: {{$countAnswered}}</p>
+        <p>Số chưa làm: {{$countNotAnswered}}</p>
         
     </main>
 
