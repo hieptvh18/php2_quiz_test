@@ -22,8 +22,8 @@
                         <th>Tên</th>
                         <th>Email</th>
                         <th>Điểm</th>
-                        <th>Số câu đã làm</th>
-                        <th>Số câu chưa làm</th>
+                        {{-- <th>Số câu đã làm</th>
+                        <th>Số câu chưa làm</th> --}}
                         <th>Bắt đầu làm</th>
                         <th>Nộp bài</th>
                     </tr>
@@ -35,8 +35,6 @@
                             <td>{{ $val->fullname }}</td>
                             <td>{{ $val->email }}</td>
                             <td>{{ $val->score }}</td>
-                            <td></td>
-                            <td></td>
 
                             <td>{{ $val->start_time_exam }}</td>
                             <td>{{ $val->end_time_exam }}</td>
