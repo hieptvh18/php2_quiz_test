@@ -41,21 +41,14 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <input type="text" id="name" class="fadeIn second" value="{{old('email')}}" name="email" placeholder="email" >
-                @error('name')
+                @error('email')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <input type="password" id="password" value="" class="fadeIn third" name="password" placeholder="password">
-                @error('name')
+                @error('password')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <div class="form-group">
-                    <label for="">Ảnh đại diện</label>
-                    <br>
-                    <input type="file" name="avatar" class=" fadeIn third">
-                    @error('name')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                
 
               <div class="form-group">
                 <p>Vai trò</p>
@@ -64,7 +57,7 @@
                 <input type="radio" id="role2" value="2" class="fadeIn second" name="role_id">
                 <label for="role2">Giáo viên</label>
               </div>
-                @error('name')
+                @error('role_id')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <input type="submit" name="btnRegister" class="fadeIn fourth" value="Đăng kí">
@@ -72,8 +65,7 @@
 
             <!-- Remind Passowrd -->
             <div id="formFooter">
-                <a class="underlineHover" href="{{ route('login') }}">Đăng nhập?</a>
-                <a class="underlineHover" href="">Quên mật khẩu</a>
+                <a class="underlineHover" href="{{ route('auth.login') }}">Đăng nhập?</a>
             </div>
 
             <div class="login-gg">

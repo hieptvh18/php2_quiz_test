@@ -29,7 +29,7 @@
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{route('exam.history')}}">Lịch sử</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a>
+                    <a class="dropdown-item" href="{{ route('auth.logout') }}">Đăng xuất</a>
                 </div>
             </div>
         @elseif(Session::get('teacher'))
@@ -40,14 +40,14 @@
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{route('exam.history')}}">Lịch sử</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a>
+                    <a class="dropdown-item" href="{{ route('auth.logout') }}">Đăng xuất</a>
                 </div>
             </div>
             
         @else
             <div class="register">
-                <a href="{{ route('login') }}" class="btn btn-warning">Đăng nhập</a>
-                <a href="{{ route('register') }}" class="btn btn-primary">Đăng ký</a>
+                <a href="{{ route('auth.login') }}" class="btn btn-warning">Đăng nhập</a>
+                <a href="{{ route('auth.register') }}" class="btn btn-primary">Đăng ký</a>
             </div>
         @endif
     </div>

@@ -21,7 +21,7 @@ class AuthLogin
         
         // check đã login mới dc vào app
         if(!$request->session()->has('student') && !$request->session()->has('teacher')){
-            return redirect()->route('login')->with('message','Hãy đăng nhập để vào website!');
+            return redirect()->route('auth.login')->with('message','Hãy đăng nhập để vào website!');
         }
 
         return $next($request);

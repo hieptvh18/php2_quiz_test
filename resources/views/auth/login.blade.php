@@ -60,8 +60,8 @@
 
             <!-- Remind Passowrd -->
             <div id="formFooter">
-                <a class="underlineHover" href="#">Forgot Password?</a>
-                <a class="underlineHover" href="{{ route('register') }}">Đăng kí tài khoản</a>
+                <a class="underlineHover" href="{{route('auth.confirm-forgot-pass')}}">Quên mật khẩu?</a>
+                <a class="underlineHover" href="{{ route('auth.register') }}">Đăng kí tài khoản</a>
             </div>
 
             <div class="login-gg">
