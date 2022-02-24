@@ -15,7 +15,7 @@ use  App\Http\Controllers\backend\QuestionController;
 use  App\Http\Controllers\backend\AnswerController;
 
 // auth
-use App\Http\Controllers\auth\RegisterMailController;
+
 
 // ajax
 
@@ -31,8 +31,18 @@ Route::prefix('auth')->group(function () {
     Route::any('/login', [AccountController::class, 'login'])->name('auth.login');
     Route::any('/logout', [AccountController::class, 'logout'])->name('auth.logout');
 
-    // pass
-    Route::get('/confirm-forgot-pass',[RegisterMailController::class,'sendMailForgotPass'])->name('auth.confirm-forgot-pass');
+    // password
+    Route::post('/forgot-pass',[AccountController::class,'handleForgotPass'])->name('auth.forgot-pass-handle');
+    Route::view('/forgot-pass','auth.passwords.email')->name('auth.forgot-pass');
+
+    Route::view('/enter-code-forgot-pass','auth.passwords.enter-code')->name('auth.enter-code-forgot');
+    Route::post('/enter-code-forgot-pass',[AccountController::class,'handleEnterCodeForgotPass'])->name('auth.handle-enter-code-forgot');
+
+    // enter pass new
+    Route::view('/enter-pass-new','auth.passwords.reset')->name('auth.enter-pass-new');
+    Route::post('/enter-pass-new',[AccountController::class,'handleEnterPassNew'])->name('auth.handle-enter-pass-new');
+
+    
 
 });
 

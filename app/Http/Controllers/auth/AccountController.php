@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\User;
+use Session;
 
 use Mail;
-use App\Mail\AuthRegisterMail;
+use App\Mail\AuthAccount;
 
 class AccountController extends Controller
 {
@@ -95,16 +96,11 @@ class AccountController extends Controller
         // hủy ss
         if (session()->has('student')) {
             session()->pull('student');
-            return redirect()->route('login')->with('message', 'Đăng xuất thành công');
+            return redirect()->route('auth.login')->with('message', 'Đăng xuất thành công');
         } elseif (session()->has('teacher')) {
             session()->pull('teacher');
-            return redirect()->route('login')->with('message', 'Đăng xuất thành công');
+            return redirect()->route('auth.login')->with('message', 'Đăng xuất thành công');
         }
-
-        // hủy cookie
-        // if(Cookie::get('loginPassword')){
-        //     die('hi cookie');
-        // }
 
     }
 
@@ -131,8 +127,10 @@ class AccountController extends Controller
         
                 if ($save) {
                     // upload img
+                    Session::flush();
                     return redirect()->route('auth.login')->with('message', 'Đăng kí tài khoản thành công!');
                 } else {
+                    Session::flush();
                     return back()->with('message', 'Đăng kí thất bại! Vui lòng thử lại!');
                 }
             }
@@ -144,11 +142,6 @@ class AccountController extends Controller
 
     }
 
-    // handle confirm
-    public function confirmRegister(Request $rq)
-    {
-
-    }
 
     // truyền data gửi mail
 
@@ -166,10 +159,73 @@ class AccountController extends Controller
 
     }
 
-    // forgot password
 
-    public function forgotPass(){
-        
+    // màn hình nhận mail và gửi code
+    public function handleForgotPass(Request $rq){
+        // handle forgot pass
+        // check email exits rồi gửi mail
+        if(User::where('email',$rq->input('email'))->first()){
+            session(['email'=>$rq->input('email')]);
+            $code = substr(rand(0,999999),0,6);
+
+            $this->sendMailForgotPass($rq->input('email'),$code);
+
+           // gọi form nhập code
+           return redirect()->route('auth.enter-code-forgot');
+
+        }else{
+            return back()->with('message','Email không chính xác, vui lòng thử lại!');
+        }
+
     }
 
+ 
+    // xử lí nhập code
+    public function handleEnterCodeForgotPass(Request $rq){
+        $rq->validate([
+            'code'=>'required'
+        ]);
+
+        // check code
+        if(session('code_forgot_pass') == $rq->input('code')){
+            return redirect()->route('auth.enter-pass-new');
+
+        }else{
+            return back()->with('message','Mã code không chính xác!');
+        }
+
+    }
+
+
+    // xử lí lưu pass mới
+    public function handleEnterPassNew(Request $rq){
+
+        $rq->validate([
+            'password_new' => 'required|min:5'
+        ]);
+        if($rq->input('password_new') == $rq->input('password_confirm')){
+            $user = User::where('email',session('email'))->first();
+            $user->password = Hash::make($rq->input('password_new'));
+            $user->save();
+
+            // xóa ss lưu mail
+            Session::flush();
+            return redirect()->route('auth.login')->with('message','Lấy lại mật khẩu thành công!');
+        }
+        
+        return back()->with('message','Mật khẩu không trùng khớp, nhập lại!');
+
+    }
+
+    // sendmail forgot passs
+    public function sendMailForgotPass($mailTo, $code){
+        session(['code_forgot_pass' => $code]);
+
+        $mailData = [
+            'title' => 'Mail xác nhận quên mật khẩu Quiz POLY',
+            'code' => $code
+        ];
+
+        Mail::to($mailTo)->send(new AuthRegisterMail($mailData));
+    }
 }

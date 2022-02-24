@@ -11,8 +11,11 @@
             <label for="">Nhập mã xác nhận</label>
             <input type="text" name="code" class="form-control">
             @error('code')
-            <div class="text-danger">{{ $message }}</div>
+                <div class="text-danger">{{ $message }}</div>
             @enderror
+            @if (session('message'))
+                <div class="text-danger">{{session('message')}}</div>
+            @endif
         </div>
         <button type="submit" class="btn btn-info">Confirm</button>
     </form>

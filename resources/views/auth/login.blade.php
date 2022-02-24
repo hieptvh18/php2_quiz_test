@@ -60,7 +60,7 @@
 
             <!-- Remind Passowrd -->
             <div id="formFooter">
-                <a class="underlineHover" href="{{route('auth.confirm-forgot-pass')}}">Quên mật khẩu?</a>
+                <a class="underlineHover" href="{{route('auth.forgot-pass')}}">Quên mật khẩu?</a>
                 <a class="underlineHover" href="{{ route('auth.register') }}">Đăng kí tài khoản</a>
             </div>
 
