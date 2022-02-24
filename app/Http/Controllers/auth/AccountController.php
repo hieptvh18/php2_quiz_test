@@ -155,7 +155,7 @@ class AccountController extends Controller
             'code' => $code
         ];
 
-        Mail::to($mailTo)->send(new AuthRegisterMail($mailData));
+        Mail::to($mailTo)->send(new AuthAccount($mailData));
 
     }
 
@@ -226,6 +226,6 @@ class AccountController extends Controller
             'code' => $code
         ];
 
-        Mail::to($mailTo)->send(new AuthRegisterMail($mailData));
+        Mail::to($mailTo)->send(new AuthAccount($mailData));
     }
 }
