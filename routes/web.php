@@ -15,7 +15,7 @@ use  App\Http\Controllers\backend\QuestionController;
 use  App\Http\Controllers\backend\AnswerController;
 
 // auth
-
+use App\Http\Controllers\auth\GoogleController;
 
 // ajax
 
@@ -43,8 +43,13 @@ Route::prefix('auth')->group(function () {
     Route::post('/enter-pass-new',[AccountController::class,'handleEnterPassNew'])->name('auth.handle-enter-pass-new');
 
     
-
+  
 });
+
+  // login goole
+    Route::get('/google',[GoogleController::class,'redirectToGoogle'])->name('login.google');
+    Route::get('/google/callback',[GoogleController::class,'googleCallback'])->name('login.callback');
+
 
 //=========== define route frontend ==========
 // group all route yêu cầu login

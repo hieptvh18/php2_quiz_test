@@ -156,7 +156,7 @@ class ExamController extends Controller
     public function examResult(Request $rq, $id)
     {
         // get data
-        $userId = session('student') ? session('student')->id : session('teacher')->id;
+        $userId = session('student') ? session('student')->email : session('teacher')->id;
         $result = StudentQuiz::select('student_quizs.*', 'student_quiz_detail.*')
             ->join('student_quiz_detail', 'student_quiz_detail.student_quiz_id', 'student_quizs.id')
             ->where('student_quizs.student_id', $userId)

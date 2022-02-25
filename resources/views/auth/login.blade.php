@@ -65,7 +65,8 @@
             </div>
 
             <div class="login-gg">
-                <a href="" class="btn btn-primary form-control">Đăng nhập bằng google</a>
+                <a href="{{route('login.google')}}" class="btn btn-primary form-control">Đăng nhập bằng Google <i class="fa fas-google-plus" aria-hidden="true"></i>
+</a>
             </div>
 
         </div>
