@@ -19,9 +19,8 @@ class GoogleController extends Controller
     public function googleCallback(){
         $user = Socialite::driver('google')->stateless()->user();
         // lưu
-        dd($user);
         if(!empty($user)){
-            // Auth::Login($user);
+            Auth::Login($user);
             // check role và lưu session thôi
            session(['student'=>$user]);
             

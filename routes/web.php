@@ -16,6 +16,7 @@ use  App\Http\Controllers\backend\AnswerController;
 
 // auth
 use App\Http\Controllers\auth\GoogleController;
+use Illuminate\Support\Facades\Auth;
 
 // ajax
 
@@ -151,6 +152,6 @@ Route::middleware(['AuthLogin:class'])->group(function () {
 
 
 
-// Auth::routes();
+Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
